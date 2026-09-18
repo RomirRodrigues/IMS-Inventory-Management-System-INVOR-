@@ -4,7 +4,7 @@
   <section class="content-header" style="padding: 25px 25px 15px 25px;">
     <h1 style="font-weight: 200; letter-spacing: -0.5px; color: #ffffff;">
       AI Demand Prediction
-      <small style="color: #64748b; font-weight: 300;">21st.dev Inventory Intelligence & Reorder Engine</small>
+      <small style="color: #64748b; font-weight: 300;">Smart Inventory Forecasting & Reorder Engine</small>
     </h1>
     <ol class="breadcrumb" style="background: transparent; top: 25px;">
       <li><a href="<?php echo base_url('dashboard'); ?>" style="color: #64748b;"><i class="fa fa-dashboard"></i> Home</a></li>
