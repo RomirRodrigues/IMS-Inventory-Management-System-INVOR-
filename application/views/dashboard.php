@@ -1,138 +1,141 @@
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper bg-black text-slate-200">
   <!-- Content Header (Page header) -->
-  <section class="content-header" style="padding: 25px 25px 15px 25px;">
-    <h1 style="font-weight: 200; letter-spacing: -0.5px; color: #ffffff;">
+  <section class="content-header px-4 md:px-6 pt-4 md:pt-6 pb-2 border-b border-white/[0.08]">
+    <h1 class="text-xl md:text-2xl font-thin tracking-widest text-white uppercase flex items-center gap-2">
       Dashboard Overview
-      <small style="color: #64748b; font-weight: 300;">Control Panel & Inventory System</small>
     </h1>
-    <ol class="breadcrumb" style="background: transparent; top: 25px;">
-      <li><a href="<?php echo base_url('dashboard'); ?>" style="color: #64748b;"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active" style="color: #38bdf8;">Dashboard</li>
+    <ol class="breadcrumb bg-transparent px-0 py-1 text-xs text-slate-500">
+      <li><a href="<?php echo base_url('dashboard'); ?>" class="text-slate-400 hover:text-white"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active text-sky-400">Dashboard</li>
     </ol>
   </section>
 
   <!-- Main content -->
-  <section class="content" style="padding: 0 25px 25px 25px;">
+  <section class="content px-3 md:px-6 py-4 md:py-6">
 
-    <!-- 21st.dev Quick Action Bar -->
-    <div class="row" style="margin-bottom: 25px;">
+    <!-- Quick Action Bar -->
+    <div class="row mb-4">
       <div class="col-md-12">
-        <div class="metric-card" style="padding: 16px 24px; display: flex; align-items: center; flex-wrap: wrap; gap: 12px; background: rgba(15, 15, 15, 0.9);">
-          <span style="font-size: 13px; font-weight: 300; text-transform: uppercase; letter-spacing: 1.5px; color: #94a3b8; margin-right: 10px; display: flex; align-items: center; gap: 6px;">
+        <div class="metric-card p-3 md:p-4 flex flex-wrap items-center gap-2 bg-slate-950/90 border border-slate-800 rounded-xl">
+          <span class="text-xs uppercase tracking-widest text-slate-400 font-light flex items-center gap-1.5 w-full md:w-auto mb-1 md:mb-0">
             <iconify-icon icon="solar:cpu-bolt-linear" width="18" height="18" class="text-amber-400"></iconify-icon>
             Quick Actions:
           </span>
-          <a href="<?php echo base_url('orders/create'); ?>" class="btn btn-primary btn-flat" style="display: inline-flex; align-items: center; gap: 6px;"><i class="fa fa-plus-circle"></i> Create Order</a>
-          <a href="<?php echo base_url('products/create'); ?>" class="btn btn-success btn-flat" style="display: inline-flex; align-items: center; gap: 6px;"><i class="fa fa-cube"></i> Add Product</a>
-          <a href="<?php echo base_url('products'); ?>" class="btn btn-info btn-flat" style="display: inline-flex; align-items: center; gap: 6px;"><i class="fa fa-list"></i> View Products</a>
-          <a href="<?php echo base_url('forecast'); ?>" class="btn btn-warning btn-flat" style="display: inline-flex; align-items: center; gap: 6px;"><i class="fa fa-magic"></i> AI Forecast</a>
+          <a href="<?php echo base_url('orders/create'); ?>" class="btn btn-primary btn-sm flex-grow md:flex-grow-0 inline-flex items-center justify-center gap-1.5"><i class="fa fa-plus-circle"></i> Create Order</a>
+          <a href="<?php echo base_url('products/create'); ?>" class="btn btn-success btn-sm flex-grow md:flex-grow-0 inline-flex items-center justify-center gap-1.5"><i class="fa fa-cube"></i> Add Product</a>
+          <a href="<?php echo base_url('products'); ?>" class="btn btn-info btn-sm flex-grow md:flex-grow-0 inline-flex items-center justify-center gap-1.5"><i class="fa fa-list"></i> Products</a>
+          <a href="<?php echo base_url('forecast'); ?>" class="btn btn-warning btn-sm flex-grow md:flex-grow-0 inline-flex items-center justify-center gap-1.5"><i class="fa fa-magic"></i> AI Forecast</a>
         </div>
       </div>
     </div>
 
-    <!-- 21st.dev Metric Stat Cards -->
-    <div class="row" style="margin-bottom: 25px;">
-      <div class="col-lg-3 col-xs-6">
-        <div class="metric-card">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <!-- Metric Stat Cards (Fully Responsive 1-Col Mobile, 4-Col Desktop) -->
+    <div class="row mb-4">
+      <div class="col-xs-12 col-sm-6 col-lg-3 mb-3">
+        <div class="metric-card p-4">
+          <div class="flex justify-between items-start">
             <div>
-              <div class="metric-value"><?php echo $total_products; ?></div>
-              <div class="metric-label">Total Products</div>
+              <div class="metric-value text-2xl md:text-3xl font-light text-white"><?php echo $total_products; ?></div>
+              <div class="metric-label text-xs text-slate-400 uppercase tracking-wider mt-1">Total Products</div>
             </div>
-            <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.2); display: flex; align-items: center; justify-content: center;">
+            <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center">
               <iconify-icon icon="solar:box-linear" width="22" height="22" class="text-sky-400"></iconify-icon>
             </div>
           </div>
-          <a href="<?php echo base_url('products/'); ?>" style="display: block; margin-top: 16px; font-size: 12px; color: #38bdf8; text-decoration: none;">Manage Catalog &rarr;</a>
+          <a href="<?php echo base_url('products/'); ?>" class="block mt-3 text-xs text-sky-400 hover:text-white transition-colors">Manage Catalog &rarr;</a>
         </div>
       </div>
 
-      <div class="col-lg-3 col-xs-6">
-        <div class="metric-card">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+      <div class="col-xs-12 col-sm-6 col-lg-3 mb-3">
+        <div class="metric-card p-4">
+          <div class="flex justify-between items-start">
             <div>
-              <div class="metric-value"><?php echo $total_paid_orders; ?></div>
-              <div class="metric-label">Paid Orders</div>
+              <div class="metric-value text-2xl md:text-3xl font-light text-white"><?php echo $total_paid_orders; ?></div>
+              <div class="metric-label text-xs text-slate-400 uppercase tracking-wider mt-1">Paid Orders</div>
             </div>
-            <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(52, 211, 153, 0.1); border: 1px solid rgba(52, 211, 153, 0.2); display: flex; align-items: center; justify-content: center;">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
               <iconify-icon icon="solar:bag-check-linear" width="22" height="22" class="text-emerald-400"></iconify-icon>
             </div>
           </div>
-          <a href="<?php echo base_url('orders/'); ?>" style="display: block; margin-top: 16px; font-size: 12px; color: #34d399; text-decoration: none;">View Order Ledger &rarr;</a>
+          <a href="<?php echo base_url('orders/'); ?>" class="block mt-3 text-xs text-emerald-400 hover:text-white transition-colors">View Order Ledger &rarr;</a>
         </div>
       </div>
 
-      <div class="col-lg-3 col-xs-6">
-        <div class="metric-card" style="<?php echo ($total_low_stock > 0) ? 'border-color: rgba(248, 113, 113, 0.4);' : ''; ?>">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+      <div class="col-xs-12 col-sm-6 col-lg-3 mb-3">
+        <div class="metric-card p-4 <?php echo ($total_low_stock > 0) ? 'border-rose-500/40' : ''; ?>">
+          <div class="flex justify-between items-start">
             <div>
-              <div class="metric-value" style="<?php echo ($total_low_stock > 0) ? 'color: #f87171;' : ''; ?>"><?php echo $total_low_stock; ?></div>
-              <div class="metric-label">Low Stock Alerts</div>
+              <div class="metric-value text-2xl md:text-3xl font-light <?php echo ($total_low_stock > 0) ? 'text-rose-400' : 'text-white'; ?>"><?php echo $total_low_stock; ?></div>
+              <div class="metric-label text-xs text-slate-400 uppercase tracking-wider mt-1">Low Stock Alerts</div>
             </div>
-            <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.2); display: flex; align-items: center; justify-content: center;">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
               <iconify-icon icon="solar:danger-triangle-linear" width="22" height="22" class="text-amber-400"></iconify-icon>
             </div>
           </div>
-          <a href="<?php echo base_url('products/'); ?>" style="display: block; margin-top: 16px; font-size: 12px; color: #fbbf24; text-decoration: none;">Check Stock Health &rarr;</a>
+          <a href="<?php echo base_url('products/'); ?>" class="block mt-3 text-xs text-amber-400 hover:text-white transition-colors">Check Stock Health &rarr;</a>
         </div>
       </div>
 
-      <div class="col-lg-3 col-xs-6">
-        <div class="metric-card">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+      <div class="col-xs-12 col-sm-6 col-lg-3 mb-3">
+        <div class="metric-card p-4">
+          <div class="flex justify-between items-start">
             <div>
-              <div class="metric-value"><?php echo $currency . ' ' . number_format($total_revenue, 2); ?></div>
-              <div class="metric-label">Total Revenue</div>
+              <div class="metric-value text-xl md:text-2xl font-light text-white truncate max-w-[180px]"><?php echo $currency . ' ' . number_format($total_revenue, 2); ?></div>
+              <div class="metric-label text-xs text-slate-400 uppercase tracking-wider mt-1">Total Revenue</div>
             </div>
-            <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(192, 132, 252, 0.1); border: 1px solid rgba(192, 132, 252, 0.2); display: flex; align-items: center; justify-content: center;">
+            <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
               <iconify-icon icon="solar:wallet-money-linear" width="22" height="22" class="text-purple-400"></iconify-icon>
             </div>
           </div>
-          <a href="<?php echo base_url('reports/'); ?>" style="display: block; margin-top: 16px; font-size: 12px; color: #c084fc; text-decoration: none;">Financial Analytics &rarr;</a>
+          <a href="<?php echo base_url('reports/'); ?>" class="block mt-3 text-xs text-purple-400 hover:text-white transition-colors">Financial Analytics &rarr;</a>
         </div>
       </div>
     </div>
 
-    <!-- Sales & Inventory Overview Charts -->
-    <div class="row">
-      <div class="col-md-8">
-        <div class="box">
-          <div class="box-header">
-            <h3 class="box-title"><i class="fa fa-line-chart" style="color: #38bdf8;"></i> Revenue Flow Velocity (<?php echo $selected_year; ?>)</h3>
+    <!-- Sales Chart & System Matrix Summary -->
+    <div class="row mb-4">
+      <div class="col-md-8 mb-4">
+        <div class="box bg-slate-950/80 border border-white/10 rounded-xl p-4">
+          <div class="box-header pb-2 border-b border-slate-800">
+            <h3 class="box-title text-sm md:text-base text-white font-light flex items-center gap-2">
+              <i class="fa fa-line-chart text-sky-400"></i> Revenue Flow Velocity (<?php echo $selected_year; ?>)
+            </h3>
           </div>
-          <div class="box-body">
-            <div class="chart">
-              <canvas id="monthlySalesChart" style="height: 270px;"></canvas>
+          <div class="box-body pt-3">
+            <div class="chart relative h-[220px] md:h-[270px]">
+              <canvas id="monthlySalesChart"></canvas>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="col-md-4">
-        <div class="box">
-          <div class="box-header">
-            <h3 class="box-title"><i class="fa fa-pie-chart" style="color: #fbbf24;"></i> System Matrix Summary</h3>
+      <div class="col-md-4 mb-4">
+        <div class="box bg-slate-950/80 border border-white/10 rounded-xl p-4">
+          <div class="box-header pb-2 border-b border-slate-800">
+            <h3 class="box-title text-sm md:text-base text-white font-light flex items-center gap-2">
+              <i class="fa fa-pie-chart text-amber-400"></i> System Matrix Summary
+            </h3>
           </div>
-          <div class="box-body">
-            <ul style="list-style: none; padding: 0; margin: 0;">
-              <li style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);">
+          <div class="box-body pt-3">
+            <ul class="divide-y divide-slate-800/80 text-xs">
+              <li class="flex justify-between py-2.5 text-slate-300">
                 <span>Total Catalog Items</span>
                 <code><?php echo $total_products; ?></code>
               </li>
-              <li style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);">
+              <li class="flex justify-between py-2.5 text-slate-300">
                 <span>Low Stock Threshold (&le; 5)</span>
-                <span class="badge bg-yellow"><?php echo $total_low_stock; ?></span>
+                <span class="badge bg-amber-500/20 text-amber-300 border border-amber-500/30"><?php echo $total_low_stock; ?></span>
               </li>
-              <li style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);">
+              <li class="flex justify-between py-2.5 text-slate-300">
                 <span>Out of Stock Items</span>
-                <span class="badge bg-red"><?php echo $total_out_of_stock; ?></span>
+                <span class="badge bg-rose-500/20 text-rose-300 border border-rose-500/30"><?php echo $total_out_of_stock; ?></span>
               </li>
-              <li style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);">
+              <li class="flex justify-between py-2.5 text-slate-300">
                 <span>Active Store Outlets</span>
                 <code><?php echo $total_stores; ?></code>
               </li>
-              <li style="display: flex; justify-content: space-between; padding: 12px 0;">
+              <li class="flex justify-between py-2.5 text-slate-300">
                 <span>Registered Operatives</span>
                 <code><?php echo $total_users; ?></code>
               </li>
@@ -142,21 +145,23 @@
       </div>
     </div>
 
-    <!-- Tables Row: Low Stock Alerts & Recent Orders -->
+    <!-- Mobile-Optimized Tables Row: Stock Alerts & Recent Orders -->
     <div class="row">
-      <div class="col-md-6">
-        <div class="box">
-          <div class="box-header" style="display: flex; justify-content: space-between; align-items: center;">
-            <h3 class="box-title"><i class="fa fa-bell-o" style="color: #f87171;"></i> Critical Stock Alerts</h3>
+      <div class="col-md-6 mb-4">
+        <div class="box bg-slate-950/80 border border-white/10 rounded-xl p-4">
+          <div class="box-header pb-2 border-b border-slate-800 flex justify-between items-center">
+            <h3 class="box-title text-sm md:text-base text-white font-light flex items-center gap-2">
+              <i class="fa fa-bell-o text-rose-400"></i> Critical Stock Alerts
+            </h3>
             <a href="<?php echo base_url('products'); ?>" class="btn btn-xs btn-primary">View All</a>
           </div>
-          <div class="box-body table-responsive no-padding">
-            <table class="table table-hover">
+          <div class="box-body p-0 table-responsive">
+            <table class="table table-hover text-xs">
               <thead>
                 <tr>
                   <th>Product Name</th>
                   <th>SKU</th>
-                  <th>Quantity</th>
+                  <th>Qty</th>
                   <th>Price</th>
                   <th>Status</th>
                 </tr>
@@ -168,23 +173,23 @@
                       <td><strong><?php echo htmlspecialchars($item['name']); ?></strong></td>
                       <td><code><?php echo htmlspecialchars($item['sku']); ?></code></td>
                       <td>
-                        <span class="badge <?php echo ($item['qty'] <= 0) ? 'bg-red' : 'bg-yellow'; ?>">
+                        <span class="badge <?php echo ($item['qty'] <= 0) ? 'bg-rose-500/20 text-rose-300' : 'bg-amber-500/20 text-amber-300'; ?>">
                           <?php echo $item['qty']; ?>
                         </span>
                       </td>
                       <td><?php echo $currency . ' ' . number_format((float)$item['price'], 2); ?></td>
                       <td>
                         <?php if($item['qty'] <= 0): ?>
-                          <span class="label label-danger">Out of Stock</span>
+                          <span class="px-2 py-0.5 rounded text-[10px] bg-rose-500/20 text-rose-300 border border-rose-500/30">Out of Stock</span>
                         <?php else: ?>
-                          <span class="label label-warning">Low Stock</span>
+                          <span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30">Low Stock</span>
                         <?php endif; ?>
                       </td>
                     </tr>
                   <?php endforeach; ?>
                 <?php else: ?>
                   <tr>
-                    <td colspan="5" class="text-center text-muted" style="padding: 20px;">All catalog inventory healthy!</td>
+                    <td colspan="5" class="text-center text-slate-500 py-4">All catalog inventory healthy!</td>
                   </tr>
                 <?php endif; ?>
               </tbody>
@@ -193,20 +198,22 @@
         </div>
       </div>
 
-      <div class="col-md-6">
-        <div class="box">
-          <div class="box-header" style="display: flex; justify-content: space-between; align-items: center;">
-            <h3 class="box-title"><i class="fa fa-shopping-bag" style="color: #34d399;"></i> Recent Orders</h3>
+      <div class="col-md-6 mb-4">
+        <div class="box bg-slate-950/80 border border-white/10 rounded-xl p-4">
+          <div class="box-header pb-2 border-b border-slate-800 flex justify-between items-center">
+            <h3 class="box-title text-sm md:text-base text-white font-light flex items-center gap-2">
+              <i class="fa fa-shopping-bag text-emerald-400"></i> Recent Orders
+            </h3>
             <a href="<?php echo base_url('orders'); ?>" class="btn btn-xs btn-primary">View All</a>
           </div>
-          <div class="box-body table-responsive no-padding">
-            <table class="table table-hover">
+          <div class="box-body p-0 table-responsive">
+            <table class="table table-hover text-xs">
               <thead>
                 <tr>
                   <th>Bill No</th>
-                  <th>Customer Name</th>
+                  <th>Customer</th>
                   <th>Date</th>
-                  <th>Net Amount</th>
+                  <th>Amount</th>
                   <th>Status</th>
                 </tr>
               </thead>
@@ -220,16 +227,16 @@
                       <td><strong><?php echo $currency . ' ' . number_format((float)$order['net_amount'], 2); ?></strong></td>
                       <td>
                         <?php if($order['paid_status'] == 1): ?>
-                          <span class="label label-success">Paid</span>
+                          <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Paid</span>
                         <?php else: ?>
-                          <span class="label label-warning">Unpaid</span>
+                          <span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30">Unpaid</span>
                         <?php endif; ?>
                       </td>
                     </tr>
                   <?php endforeach; ?>
                 <?php else: ?>
                   <tr>
-                    <td colspan="5" class="text-center text-muted" style="padding: 20px;">No recent transactions.</td>
+                    <td colspan="5" class="text-center text-slate-500 py-4">No recent transactions.</td>
                   </tr>
                 <?php endif; ?>
               </tbody>
@@ -240,15 +247,12 @@
     </div>
 
   </section>
-  <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
 
 <script type="text/javascript">
   $(document).ready(function() {
     $("#dashboardMainMenu").addClass('active');
 
-    // 21st.dev Chart.js Monthly Sales Styling
     var monthlySalesData = <?php echo $monthly_sales; ?>;
     var canvas = document.getElementById('monthlySalesChart');
     if (canvas) {
