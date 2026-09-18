@@ -107,6 +107,57 @@
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+
+<!-- 21st.dev High-Tech Welcome Loader Animation -->
+<div id="nexus-welcome-overlay" style="position: fixed; inset: 0; z-index: 99999; background: #000000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease, transform 0.8s ease; pointer-events: auto;">
+  <div style="position: absolute; inset: 0; opacity: 0.15; pointer-events: none; background-image: url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%202%202%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23ffffff%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23ffffff%22%2F%3E%3C%2Fsvg%3E'); background-size: 2px 2px;"></div>
+  <div style="position: relative; margin-bottom: 24px;">
+    <div style="width: 72px; height: 72px; border-radius: 20px; background: rgba(10,10,10,0.9); border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 35px rgba(56, 189, 248, 0.25);">
+      <iconify-icon icon="solar:cpu-bolt-linear" width="36" height="36" style="color: #38bdf8;"></iconify-icon>
+    </div>
+    <div style="position: absolute; inset: -8px; border-radius: 24px; border: 1px solid rgba(56, 189, 248, 0.35); animation: nexusPulse 2s infinite ease-in-out;"></div>
+  </div>
+  <h2 id="nexus-loader-text" style="font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 200; color: #ffffff; letter-spacing: 2.5px; text-transform: uppercase; margin: 0 0 16px 0;">
+    INITIALIZING NEXUS GATEWAY...
+  </h2>
+  <div style="width: 240px; height: 3px; background: rgba(255, 255, 255, 0.1); border-radius: 4px; overflow: hidden; position: relative;">
+    <div id="nexus-loader-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #38bdf8, #34d399); transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);"></div>
+  </div>
+  <p style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300; color: #64748b; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 16px;">
+    Inventory Intelligence Framework v2.0
+  </p>
+</div>
+
+<style>
+@keyframes nexusPulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.08); opacity: 0.7; }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var overlay = document.getElementById('nexus-welcome-overlay');
+  var bar = document.getElementById('nexus-loader-bar');
+  var text = document.getElementById('nexus-loader-text');
+
+  if (overlay && bar) {
+    setTimeout(function() { bar.style.width = '60%'; }, 100);
+    setTimeout(function() {
+      if (text) text.innerText = 'LOADING INVENTORY INTELLIGENCE...';
+      bar.style.width = '100%';
+    }, 500);
+    setTimeout(function() {
+      if (text) text.innerText = 'SYSTEM READY';
+      overlay.style.opacity = '0';
+      overlay.style.transform = 'scale(1.03)';
+      overlay.style.pointerEvents = 'none';
+      setTimeout(function() { overlay.style.display = 'none'; }, 800);
+    }, 1100);
+  }
+});
+</script>
+
 <div class="wrapper">
 
   
