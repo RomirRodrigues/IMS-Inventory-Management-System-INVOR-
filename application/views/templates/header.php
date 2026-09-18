@@ -51,6 +51,8 @@
 
   <!-- 21st.dev High-Tech Dark Theme Overlay -->
   <link rel="stylesheet" href="<?php echo base_url('assets/css/21stdev-theme.css') ?>">
+  <!-- 21st.dev Live Hot-Sync & Motion Engine -->
+  <script src="<?php echo base_url('assets/js/21stdev-live-sync.js') ?>"></script>
 
   <!-- jQuery 3 -->
   <script src="<?php echo base_url('assets/bower_components/jquery/dist/jquery.min.js') ?>"></script>

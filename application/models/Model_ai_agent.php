@@ -71,25 +71,28 @@ class Model_ai_agent extends CI_Model
             $actions[] = 'System Fallback Integrity 100% Verified (0 errors)';
         }
 
-        // 2. Evolve UI, Animations, Glassmorphism Glows & Dynamic Micro-Interactions
+        // 2. Evolve 21st.dev + Framer Motion UI, Animations, Glassmorphism Glows & Micro-Interactions
         $theme_file = FCPATH . 'assets/css/21stdev-theme.css';
         if (file_exists($theme_file) && is_writable($theme_file)) {
-            $hue = rand(180, 260); // Dynamic Cyberpunk Cyan-to-Purple accent shifts
-            $glow_opacity = sprintf('%.2f', rand(15, 35) / 100);
-            $animation_speed = sprintf('%.1f', rand(12, 25) / 10);
+            $hue = rand(180, 270); // Dynamic 21st.dev Cyberpunk Cyan-to-Purple accent shifts
+            $glow_opacity = sprintf('%.2f', rand(20, 45) / 100);
+            $animation_speed = sprintf('%.1f', rand(10, 22) / 10);
+            $rotate_deg = rand(0, 360);
 
-            $evolution_css = "\n/* --- AI 15-MIN AUTOMATED EVOLUTION [$timestamp] --- */\n" .
+            $evolution_css = "\n/* --- 21st.dev AUTOMATED MOTION EVOLUTION [$timestamp] --- */\n" .
                 ":root {\n" .
-                "  --ai-primary-accent: hsl($hue, 85%, 60%);\n" .
+                "  --ai-primary-accent: hsl($hue, 90%, 65%);\n" .
                 "  --ai-glow-rgba: rgba(56, 189, 248, $glow_opacity);\n" .
                 "  --ai-pulse-duration: {$animation_speed}s;\n" .
                 "}\n" .
-                ".ai-evolved-card { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); border-color: var(--ai-primary-accent) !important; }\n" .
-                ".ai-glow-pulse { animation: aiGlowPulse var(--ai-pulse-duration) infinite alternate ease-in-out; }\n" .
-                "@keyframes aiGlowPulse { 0% { box-shadow: 0 0 10px var(--ai-glow-rgba); } 100% { box-shadow: 0 0 25px var(--ai-primary-accent); } }\n";
+                ".box, .metric-card { transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important; }\n" .
+                ".box:hover { border-color: var(--ai-primary-accent) !important; box-shadow: 0 15px 40px rgba(0,0,0,0.9), 0 0 25px var(--ai-primary-accent) !important; }\n" .
+                ".btn-primary { background: linear-gradient({$rotate_deg}deg, #0284c7, var(--ai-primary-accent)) !important; border-color: var(--ai-primary-accent) !important; }\n" .
+                ".ai-glow-pulse { animation: aiGlowPulse var(--ai-pulse-duration) infinite alternate cubic-bezier(0.4, 0, 0.2, 1); }\n" .
+                "@keyframes aiGlowPulse { 0% { box-shadow: 0 0 10px var(--ai-glow-rgba); } 100% { box-shadow: 0 0 30px var(--ai-primary-accent); } }\n";
 
             file_put_contents($theme_file, $evolution_css, FILE_APPEND);
-            $actions[] = "UI & Animation Evolution Applied (Hue: {$hue}deg, Pulse: {$animation_speed}s)";
+            $actions[] = "21st.dev Motion Evolution Applied (Accent: {$hue}deg, Gradient Angle: {$rotate_deg}deg, Pulse: {$animation_speed}s)";
         }
 
         // 3. Record Patch in AI Log History
