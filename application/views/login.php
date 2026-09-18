@@ -47,6 +47,12 @@
                 <p class="text-xs text-slate-400 font-extralight leading-relaxed">
                     Authenticate identity or register new operative access.
                 </p>
+                <div class="mt-2">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-emerald-950/80 text-emerald-400 border border-emerald-500/30">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        v2.4 Live Unified Auth Engine
+                    </span>
+                </div>
             </div>
 
             <!-- Default Admin Quick-Fill Demo Credentials Banner -->
