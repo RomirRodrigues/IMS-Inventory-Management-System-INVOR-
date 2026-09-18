@@ -29,13 +29,13 @@ class Auth extends Admin_Controller
 			return;
 		}
 
-		$this->form_validation->set_rules('email', 'Email', 'required');
+		$this->form_validation->set_rules('email', 'Email or Username', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
 
         if ($this->form_validation->run() == TRUE) {
-           	$email_exists = $this->model_auth->check_email($this->input->post('email'));
+           	$user_exists = $this->model_auth->check_email($this->input->post('email'));
 
-           	if($email_exists == TRUE) {
+           	if($user_exists == TRUE) {
            		$login = $this->model_auth->login($this->input->post('email'), $this->input->post('password'));
 
            		if($login) {
@@ -65,7 +65,7 @@ class Auth extends Admin_Controller
 				$attempts++;
 				$this->session->set_userdata('login_attempts', $attempts);
 				$this->session->set_userdata('last_attempt_time', time());
-           		$this->data['errors'] = 'Email does not exist. Click "Create New Account" below to register!';
+           		$this->data['errors'] = 'Account does not exist yet. Click "Create Account" tab above to register your account!';
 
            		$this->load->view('login', $this->data);
            	}	
@@ -93,7 +93,7 @@ class Auth extends Admin_Controller
 			$username = trim($this->input->post('username'));
 
 			if ($this->model_auth->check_email($email)) {
-				$this->data['reg_errors'] = 'This email is already registered! Please log in.';
+				$this->data['reg_errors'] = 'This email is already registered! Please log in on the Sign In tab.';
 				$this->load->view('login', $this->data);
 				return;
 			}

@@ -8,15 +8,14 @@ class Model_auth extends CI_Model
 	}
 
 	/* 
-		This function checks if the email exists in the database
+		Checks if user exists by email OR username
 	*/
 	public function check_email($email) 
 	{
 		if($email) {
-			$sql = 'SELECT * FROM `users` WHERE email = ?';
-			$query = $this->db->query($sql, array($email));
-			$result = $query->num_rows();
-			return ($result >= 1) ? true : false;
+			$sql = 'SELECT * FROM `users` WHERE email = ? OR username = ?';
+			$query = $this->db->query($sql, array($email, $email));
+			return ($query->num_rows() >= 1) ? true : false;
 		}
 
 		return false;
@@ -25,15 +24,15 @@ class Model_auth extends CI_Model
 	public function check_username($username)
 	{
 		if($username) {
-			$sql = 'SELECT * FROM `users` WHERE username = ?';
-			$query = $this->db->query($sql, array($username));
+			$sql = 'SELECT * FROM `users` WHERE username = ? OR email = ?';
+			$query = $this->db->query($sql, array($username, $username));
 			return ($query->num_rows() >= 1) ? true : false;
 		}
 		return false;
 	}
 
 	/* 
-		This function checks if the email and password matches with the database
+		This function checks if the email/username and password matches with the database
 	*/
 	public function login($email, $password) {
 		if($email && $password) {
@@ -60,8 +59,8 @@ class Model_auth extends CI_Model
 	public function getUserByEmail($email)
 	{
 		if($email) {
-			$sql = "SELECT * FROM `users` WHERE email = ?";
-			$query = $this->db->query($sql, array($email));
+			$sql = "SELECT * FROM `users` WHERE email = ? OR username = ?";
+			$query = $this->db->query($sql, array($email, $email));
 			return $query->row_array();
 		}
 		return false;
