@@ -92,7 +92,7 @@ class Model_ai_agent extends CI_Model
                 "@keyframes aiGlowPulse { 0% { box-shadow: 0 0 10px var(--ai-glow-rgba); } 100% { box-shadow: 0 0 30px var(--ai-primary-accent); } }\n";
 
             file_put_contents($theme_file, $evolution_css, FILE_APPEND);
-            $actions[] = "21st.dev Motion Evolution Applied (Accent: {$hue}deg, Gradient Angle: {$rotate_deg}deg, Pulse: {$animation_speed}s)";
+            $actions[] = "Autonomous Motion Evolution Applied (Accent: {$hue}deg, Gradient Angle: {$rotate_deg}deg, Pulse: {$animation_speed}s)";
         }
 
         // 3. Record Patch in AI Log History

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   21st.dev + Framer Motion Real-Time Live UI Hot-Sync & Evolution Engine
+   Real-Time Live UI Hot-Sync & Autonomous Motion Engine
    ========================================================================== */
 
 (function () {
@@ -17,12 +17,12 @@
         }
     }
 
-    // Show 21st.dev Framer Motion Toast Notification
+    // Show Motion Toast Notification
     function showEvolutionToast(msg) {
-        let toast = document.getElementById('21stdev-ai-toast');
+        let toast = document.getElementById('ai-motion-toast');
         if (!toast) {
             toast = document.createElement('div');
-            toast.id = '21stdev-ai-toast';
+            toast.id = 'ai-motion-toast';
             toast.style.cssText = `
                 position: fixed;
                 bottom: 24px;
@@ -47,14 +47,14 @@
             toast.innerHTML = `
                 <div style="width: 10px; height: 10px; border-radius: 50%; background: #38bdf8; box-shadow: 0 0 10px #38bdf8; animation: ping 1.5s infinite;"></div>
                 <div>
-                    <strong style="display:block; text-transform:uppercase; letter-spacing:1px; font-size:10px; color:#38bdf8;">21st.dev Motion AI</strong>
-                    <span id="21stdev-ai-toast-msg">Site Updated Live without Refresh</span>
+                    <strong style="display:block; text-transform:uppercase; letter-spacing:1px; font-size:10px; color:#38bdf8;">Autonomous Motion AI</strong>
+                    <span id="ai-motion-toast-msg">Site Updated Live without Refresh</span>
                 </div>
             `;
             document.body.appendChild(toast);
         }
 
-        const msgSpan = document.getElementById('21stdev-ai-toast-msg');
+        const msgSpan = document.getElementById('ai-motion-toast-msg');
         if (msgSpan) msgSpan.textContent = msg || '15-Min AI Evolution Applied Live';
 
         // Trigger Motion Entrance
@@ -83,7 +83,7 @@
                     if (lastPatchId && lastPatchId !== latest.id) {
                         // New 15-min evolution or patch detected!
                         hotReloadCss();
-                        showEvolutionToast(latest.actions ? latest.actions[0] : '21st.dev Motion Evolution Live');
+                        showEvolutionToast(latest.actions ? latest.actions[0] : 'Autonomous Motion Evolution Live');
                     }
                     lastPatchId = latest.id;
                 }

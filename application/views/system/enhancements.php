@@ -4,7 +4,7 @@
   <section class="content-header" style="padding: 25px 25px 15px 25px;">
     <h1 style="font-weight: 200; letter-spacing: -0.5px; color: #ffffff;">
       System Enhancements Matrix
-      <small style="color: #64748b; font-weight: 300;">Active 21st.dev Feature Capabilities</small>
+      <small style="color: #64748b; font-weight: 300;">Active System Feature Capabilities</small>
     </h1>
     <ol class="breadcrumb" style="background: transparent; top: 25px;">
       <li><a href="<?php echo base_url('dashboard'); ?>" style="color: #64748b;"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -18,7 +18,7 @@
     <div class="row" style="margin-bottom: 25px;">
       <div class="col-md-12">
         <p style="color: #94a3b8; font-weight: 300; font-size: 14px;">
-          The inventory system has been upgraded with advanced 21st.dev features to meet enterprise scalability, remote accessibility, and real-time security needs.
+          The inventory system has been upgraded with advanced enterprise features to meet scalability, remote accessibility, and real-time security needs.
         </p>
       </div>
     </div>
