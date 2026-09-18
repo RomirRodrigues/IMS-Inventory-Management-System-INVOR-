@@ -6,9 +6,9 @@
 
 :root {
     --bg-main: #000000;
-    --bg-card: rgba(10, 10, 10, 0.92);
-    --border-base: rgba(255, 255, 255, 0.08);
-    --border-hover: rgba(255, 255, 255, 0.25);
+    --bg-card: rgba(10, 10, 10, 0.94);
+    --border-base: rgba(255, 255, 255, 0.1);
+    --border-hover: rgba(255, 255, 255, 0.28);
     --text-primary: #f8fafc;
     --text-muted: #94a3b8;
     --accent-blue: #38bdf8;
@@ -37,7 +37,7 @@ body::before {
     background-size: 2px 2px;
 }
 
-/* Wrapper Layout Overrides */
+/* Wrapper & Content Overrides */
 .wrapper {
     background-color: var(--bg-main) !important;
 }
@@ -46,6 +46,20 @@ body::before {
     background-color: var(--bg-main) !important;
     position: relative;
     z-index: 1;
+}
+
+/* Content Header Titles */
+.content-header h1 {
+    color: #ffffff !important;
+    font-weight: 200 !important;
+}
+
+.content-header .breadcrumb > li > a {
+    color: #64748b !important;
+}
+
+.content-header .breadcrumb > li.active {
+    color: #38bdf8 !important;
 }
 
 /* 21st.dev Top Navigation Bar */
@@ -164,14 +178,14 @@ body::before {
 .metric-card {
     position: relative;
     background: rgba(10, 10, 10, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
     padding: 24px;
     transition: all 0.4s ease;
 }
 
 .metric-card:hover {
-    border-color: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.28);
     box-shadow: 0 0 25px rgba(255, 255, 255, 0.04);
 }
 
@@ -191,51 +205,133 @@ body::before {
     margin-top: 4px;
 }
 
-/* DataTables 21st.dev Styling */
-.table {
-    color: #cbd5e1 !important;
-    background: transparent !important;
+/* ==========================================================================
+   TABLES & DATATABLES FULL DARK CONTRAST FIXES
+   ========================================================================== */
+
+.table-responsive {
+    border: none !important;
 }
 
-.table th {
+.table, 
+table.dataTable {
+    color: #f8fafc !important;
+    background: transparent !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.table > thead > tr > th, 
+.table > tbody > tr > th, 
+.table > tfoot > tr > th, 
+table.dataTable thead th,
+table.dataTable thead td {
     border-bottom: 1px solid var(--border-base) !important;
     color: #94a3b8 !important;
     font-weight: 400 !important;
     font-size: 12px !important;
     text-transform: uppercase !important;
     letter-spacing: 1px !important;
-    background: rgba(255, 255, 255, 0.02) !important;
+    background: rgba(255, 255, 255, 0.03) !important;
 }
 
-.table td {
-    border-top: 1px solid rgba(255, 255, 255, 0.04) !important;
+.table > tbody > tr > td, 
+.table > tfoot > tr > td, 
+table.dataTable tbody td {
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+    color: #f8fafc !important;
     font-weight: 300;
     vertical-align: middle !important;
 }
 
-.table-hover > tbody > tr:hover {
-    background-color: rgba(255, 255, 255, 0.04) !important;
+/* Fix legacy AdminLTE alternating white rows (.table-striped, .odd, .even) */
+.table-striped > tbody > tr:nth-of-type(odd),
+.table-striped > tbody > tr:nth-of-type(even),
+table.dataTable tbody tr,
+table.dataTable.display tbody tr.odd,
+table.dataTable.display tbody tr.even,
+table.dataTable.stripe tbody tr.odd,
+table.dataTable.stripe tbody tr.even {
+    background-color: rgba(12, 12, 12, 0.8) !important;
+    color: #f8fafc !important;
 }
 
+.table-hover > tbody > tr:hover,
+table.dataTable.display tbody tr:hover,
+table.dataTable.hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+}
+
+/* Fix DataTables Pagination & Filter Controls */
 .dataTables_wrapper .dataTables_length, 
 .dataTables_wrapper .dataTables_filter, 
 .dataTables_wrapper .dataTables_info, 
 .dataTables_wrapper .dataTables_paginate {
     color: #94a3b8 !important;
     font-weight: 300;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-.dataTables_wrapper input, .dataTables_wrapper select {
-    background: #000000 !important;
-    border: 1px solid var(--border-base) !important;
+.dataTables_wrapper input, 
+.dataTables_wrapper select,
+.form-control,
+select,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"] {
+    background: #0a0a0a !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
     color: #ffffff !important;
     border-radius: 8px !important;
     padding: 6px 12px !important;
 }
 
-.dataTables_wrapper input:focus, .dataTables_wrapper select:focus {
+.form-control:focus, 
+.dataTables_wrapper input:focus, 
+.dataTables_wrapper select:focus {
     border-color: var(--accent-blue) !important;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2) !important;
     outline: none !important;
+}
+
+/* Fix DataTables Pagination Buttons */
+.pagination > li > a, 
+.pagination > li > span,
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    background: rgba(20, 20, 20, 0.9) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    color: #cbd5e1 !important;
+    border-radius: 6px !important;
+    margin: 0 2px !important;
+    padding: 6px 12px !important;
+    transition: all 0.2s ease !important;
+}
+
+.pagination > li > a:hover, 
+.pagination > li > span:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.pagination > .active > a, 
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #38bdf8 !important;
+    border-color: #38bdf8 !important;
+    color: #000000 !important;
+    font-weight: 600 !important;
+}
+
+.pagination > .disabled > a, 
+.pagination > .disabled > span {
+    background: rgba(10, 10, 10, 0.5) !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+    color: #475569 !important;
 }
 
 /* Buttons 21st.dev Glass Styling */
@@ -244,6 +340,18 @@ body::before {
     font-weight: 300 !important;
     letter-spacing: 0.5px;
     transition: all 0.25s ease !important;
+}
+
+.btn-default {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #f8fafc !important;
+}
+
+.btn-default:hover, .btn-default:focus {
+    background: rgba(255, 255, 255, 0.18) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    color: #ffffff !important;
 }
 
 .btn-primary {
@@ -291,23 +399,15 @@ body::before {
     border-color: #fbbf24 !important;
 }
 
-/* Custom Sleek Scrollbar */
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+.btn-danger {
+    background: rgba(248, 113, 113, 0.1) !important;
+    border: 1px solid rgba(248, 113, 113, 0.3) !important;
+    color: #f87171 !important;
 }
 
-::-webkit-scrollbar-track {
-    background: #000000;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #262626;
-    border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #404040;
+.btn-danger:hover {
+    background: rgba(248, 113, 113, 0.2) !important;
+    border-color: #f87171 !important;
 }
 
 /* Modals 21st.dev Dark Glass */
@@ -326,6 +426,35 @@ body::before {
 
 .modal-footer {
     border-top: 1px solid var(--border-base) !important;
+}
+
+/* Fix Legacy Main Footer White Background */
+.main-footer {
+    background-color: #000000 !important;
+    border-top: 1px solid var(--border-base) !important;
+    color: #64748b !important;
+    font-size: 12px;
+    font-weight: 300;
+    padding: 15px 25px !important;
+}
+
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #404040;
 }
 
 /* Code SKU tags */
