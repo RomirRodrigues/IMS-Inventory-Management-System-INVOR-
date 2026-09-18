@@ -219,6 +219,12 @@
             animate();
         });
 
+        <?php if(!empty($reg_errors)): ?>
+        document.addEventListener('DOMContentLoaded', () => {
+            switchAuthTab('register');
+        });
+        <?php endif; ?>
+
         function fillAdminCreds() {
             document.getElementById('email').value = 'admin@admin.com';
             document.getElementById('password').value = 'password';
