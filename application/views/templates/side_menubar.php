@@ -159,6 +159,12 @@
           <li><a href="<?php echo base_url('users/setting/') ?>"><i class="fa fa-wrench"></i> <span>Setting</span></a></li>
         <?php endif; ?>
 
+        <li id="aiAgentNav">
+          <a href="<?php echo base_url('ai_agent') ?>">
+            <i class="fa fa-terminal text-aqua"></i> <span class="text-aqua">AI Code Patcher</span>
+          </a>
+        </li>
+
         <?php endif; ?>
         <!-- user permission info -->
         <li><a href="<?php echo base_url('auth/logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>Logout</span></a></li>

@@ -19,8 +19,9 @@ RUN a2enmod rewrite
 # Copy project files to Apache root
 COPY . /var/www/html/
 
-# Configure Apache to listen on $PORT if specified (Render dynamic port compatibility)
-RUN sed -i 's/80/${PORT:-80}/g' /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf
+# Entrypoint script for dynamic runtime port configuration
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Set working directory & permissions
 WORKDIR /var/www/html
@@ -28,4 +29,4 @@ RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
