@@ -48,17 +48,27 @@ body::before {
     z-index: 1;
 }
 
-/* Content Header Titles */
+/* Content Header & Breadcrumbs Fix */
 .content-header h1 {
     color: #ffffff !important;
     font-weight: 200 !important;
 }
 
-.content-header .breadcrumb > li > a {
-    color: #64748b !important;
+.content-header .breadcrumb, 
+.breadcrumb {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    padding: 4px 0 !important;
 }
 
-.content-header .breadcrumb > li.active {
+.content-header .breadcrumb > li > a,
+.breadcrumb > li > a {
+    color: #94a3b8 !important;
+}
+
+.content-header .breadcrumb > li.active,
+.breadcrumb > li.active {
     color: #38bdf8 !important;
 }
 
@@ -174,45 +184,70 @@ body::before {
     color: #cbd5e1 !important;
 }
 
-/* 21st.dev Metric Cards */
-.metric-card {
-    position: relative;
-    background: rgba(10, 10, 10, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 24px;
-    transition: all 0.4s ease;
+/* Form Controls & Inputs Dark Contrast Override */
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+select,
+.form-control {
+    background-color: #050505 !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #f8fafc !important;
+    border-radius: 8px !important;
 }
 
-.metric-card:hover {
-    border-color: rgba(255, 255, 255, 0.28);
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.04);
+textarea:focus,
+input:focus,
+select:focus,
+.form-control:focus {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.3) !important;
+    outline: none !important;
 }
 
-.metric-card .metric-value {
-    font-size: 32px;
-    font-weight: 200;
-    color: #ffffff;
-    letter-spacing: -1px;
+/* Buttons High Contrast Override */
+button,
+.btn,
+.btn-flat {
+    border-radius: 8px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease !important;
 }
 
-.metric-card .metric-label {
-    font-size: 12px;
-    font-weight: 300;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #94a3b8;
-    margin-top: 4px;
+.btn-default {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
 }
 
-/* ==========================================================================
-   TABLES & DATATABLES FULL DARK CONTRAST FIXES
-   ========================================================================== */
-
-.table-responsive {
-    border: none !important;
+.btn-default:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
 }
 
+.btn-primary {
+    background: #0284c7 !important;
+    border: 1px solid #38bdf8 !important;
+    color: #ffffff !important;
+}
+
+.btn-primary:hover {
+    background: #0369a1 !important;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4) !important;
+}
+
+/* Code SKU & Terminal Logs */
+pre, code {
+    background: #050505 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #38bdf8 !important;
+    border-radius: 8px !important;
+}
+
+/* TABLES & DATATABLES FULL DARK CONTRAST FIXES */
 .table, 
 table.dataTable {
     color: #f8fafc !important;
@@ -221,221 +256,17 @@ table.dataTable {
 }
 
 .table > thead > tr > th, 
-.table > tbody > tr > th, 
-.table > tfoot > tr > th, 
-table.dataTable thead th,
-table.dataTable thead td {
+table.dataTable thead th {
     border-bottom: 1px solid var(--border-base) !important;
     color: #94a3b8 !important;
-    font-weight: 400 !important;
-    font-size: 12px !important;
-    text-transform: uppercase !important;
-    letter-spacing: 1px !important;
     background: rgba(255, 255, 255, 0.03) !important;
 }
 
-.table > tbody > tr > td, 
-.table > tfoot > tr > td, 
-table.dataTable tbody td {
-    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
-    color: #f8fafc !important;
-    font-weight: 300;
-    vertical-align: middle !important;
-}
-
-/* Fix legacy AdminLTE alternating white rows (.table-striped, .odd, .even) */
 .table-striped > tbody > tr:nth-of-type(odd),
 .table-striped > tbody > tr:nth-of-type(even),
-table.dataTable tbody tr,
-table.dataTable.display tbody tr.odd,
-table.dataTable.display tbody tr.even,
-table.dataTable.stripe tbody tr.odd,
-table.dataTable.stripe tbody tr.even {
+table.dataTable tbody tr {
     background-color: rgba(12, 12, 12, 0.8) !important;
     color: #f8fafc !important;
-}
-
-.table-hover > tbody > tr:hover,
-table.dataTable.display tbody tr:hover,
-table.dataTable.hover tbody tr:hover {
-    background-color: rgba(255, 255, 255, 0.08) !important;
-    color: #ffffff !important;
-}
-
-/* Fix DataTables Pagination & Filter Controls */
-.dataTables_wrapper .dataTables_length, 
-.dataTables_wrapper .dataTables_filter, 
-.dataTables_wrapper .dataTables_info, 
-.dataTables_wrapper .dataTables_paginate {
-    color: #94a3b8 !important;
-    font-weight: 300;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.dataTables_wrapper input, 
-.dataTables_wrapper select,
-.form-control,
-select,
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="number"] {
-    background: #0a0a0a !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    color: #ffffff !important;
-    border-radius: 8px !important;
-    padding: 6px 12px !important;
-}
-
-.form-control:focus, 
-.dataTables_wrapper input:focus, 
-.dataTables_wrapper select:focus {
-    border-color: var(--accent-blue) !important;
-    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2) !important;
-    outline: none !important;
-}
-
-/* Fix DataTables Pagination Buttons */
-.pagination > li > a, 
-.pagination > li > span,
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-    background: rgba(20, 20, 20, 0.9) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    color: #cbd5e1 !important;
-    border-radius: 6px !important;
-    margin: 0 2px !important;
-    padding: 6px 12px !important;
-    transition: all 0.2s ease !important;
-}
-
-.pagination > li > a:hover, 
-.pagination > li > span:hover,
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    background: rgba(255, 255, 255, 0.15) !important;
-    color: #ffffff !important;
-    border-color: rgba(255, 255, 255, 0.3) !important;
-}
-
-.pagination > .active > a, 
-.pagination > .active > a:hover,
-.pagination > .active > span,
-.dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    background: #38bdf8 !important;
-    border-color: #38bdf8 !important;
-    color: #000000 !important;
-    font-weight: 600 !important;
-}
-
-.pagination > .disabled > a, 
-.pagination > .disabled > span {
-    background: rgba(10, 10, 10, 0.5) !important;
-    border-color: rgba(255, 255, 255, 0.05) !important;
-    color: #475569 !important;
-}
-
-/* Buttons 21st.dev Glass Styling */
-.btn-flat, .btn {
-    border-radius: 8px !important;
-    font-weight: 300 !important;
-    letter-spacing: 0.5px;
-    transition: all 0.25s ease !important;
-}
-
-.btn-default {
-    background: rgba(255, 255, 255, 0.06) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    color: #f8fafc !important;
-}
-
-.btn-default:hover, .btn-default:focus {
-    background: rgba(255, 255, 255, 0.18) !important;
-    border-color: rgba(255, 255, 255, 0.4) !important;
-    color: #ffffff !important;
-}
-
-.btn-primary {
-    background: #0a0a0a !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    color: #ffffff !important;
-}
-
-.btn-primary:hover {
-    background: #171717 !important;
-    border-color: rgba(255, 255, 255, 0.4) !important;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.08) !important;
-}
-
-.btn-success {
-    background: rgba(52, 211, 153, 0.1) !important;
-    border: 1px solid rgba(52, 211, 153, 0.3) !important;
-    color: #34d399 !important;
-}
-
-.btn-success:hover {
-    background: rgba(52, 211, 153, 0.2) !important;
-    border-color: #34d399 !important;
-}
-
-.btn-info {
-    background: rgba(56, 189, 248, 0.1) !important;
-    border: 1px solid rgba(56, 189, 248, 0.3) !important;
-    color: #38bdf8 !important;
-}
-
-.btn-info:hover {
-    background: rgba(56, 189, 248, 0.2) !important;
-    border-color: #38bdf8 !important;
-}
-
-.btn-warning {
-    background: rgba(251, 191, 36, 0.1) !important;
-    border: 1px solid rgba(251, 191, 36, 0.3) !important;
-    color: #fbbf24 !important;
-}
-
-.btn-warning:hover {
-    background: rgba(251, 191, 36, 0.2) !important;
-    border-color: #fbbf24 !important;
-}
-
-.btn-danger {
-    background: rgba(248, 113, 113, 0.1) !important;
-    border: 1px solid rgba(248, 113, 113, 0.3) !important;
-    color: #f87171 !important;
-}
-
-.btn-danger:hover {
-    background: rgba(248, 113, 113, 0.2) !important;
-    border-color: #f87171 !important;
-}
-
-/* Modals 21st.dev Dark Glass */
-.modal-content {
-    background: rgba(10, 10, 10, 0.96) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    border-radius: 16px !important;
-    color: #f8fafc !important;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9) !important;
-}
-
-.modal-header {
-    border-bottom: 1px solid var(--border-base) !important;
-}
-
-.modal-footer {
-    border-top: 1px solid var(--border-base) !important;
-}
-
-/* Fix Legacy Main Footer White Background */
-.main-footer {
-    background-color: #000000 !important;
-    border-top: 1px solid var(--border-base) !important;
-    color: #64748b !important;
-    font-size: 12px;
-    font-weight: 300;
-    padding: 15px 25px !important;
 }
 
 /* Custom Sleek Scrollbar */
@@ -451,18 +282,4 @@ input[type="number"] {
 ::-webkit-scrollbar-thumb {
     background: #262626;
     border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #404040;
-}
-
-/* Code SKU tags */
-code {
-    background: rgba(255, 255, 255, 0.05) !important;
-    color: #38bdf8 !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-radius: 6px !important;
-    padding: 2px 6px !important;
-    font-family: monospace !important;
 }
