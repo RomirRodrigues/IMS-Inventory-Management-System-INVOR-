@@ -6,10 +6,10 @@ services:
     dockerfilePath: Dockerfile
     envVars:
       - key: MYSQL_HOST
-        sync: false
+        value: bsxy5i1rcm0shnblmbod-mysql.services.clever-cloud.com
       - key: MYSQL_USER
-        sync: false
+        value: ufet9steolrjpkus
       - key: MYSQL_PASSWORD
-        sync: false
+        value: a2fSxd3z6rJDyxiXmw9c
       - key: MYSQL_DATABASE
-        value: stock
+        value: bsxy5i1rcm0shnblmbod
