@@ -2,9 +2,12 @@
 
 class Model_ai_agent extends CI_Model
 {
+    private $log_file;
+
     public function __construct()
     {
         parent::__construct();
+        $this->log_file = APPPATH . 'logs/ai_patches.json';
     }
 
     /*
@@ -53,6 +56,61 @@ class Model_ai_agent extends CI_Model
     }
 
     /*
+        15-Minute Automated Self-Updating & Evolution Engine
+    */
+    public function autoEvolveSite()
+    {
+        $timestamp = date('Y-m-d H:i:s');
+        $actions = array();
+
+        // 1. Run Fallback & Integrity Diagnostics
+        $diagnostics = $this->runDiagnostics();
+        if (!empty($diagnostics['recommendations'])) {
+            $actions[] = 'Fallback Alert: ' . implode(', ', $diagnostics['recommendations']);
+        } else {
+            $actions[] = 'System Fallback Integrity 100% Verified (0 errors)';
+        }
+
+        // 2. Evolve UI, Animations, Glassmorphism Glows & Dynamic Micro-Interactions
+        $theme_file = FCPATH . 'assets/css/21stdev-theme.css';
+        if (file_exists($theme_file) && is_writable($theme_file)) {
+            $hue = rand(180, 260); // Dynamic Cyberpunk Cyan-to-Purple accent shifts
+            $glow_opacity = sprintf('%.2f', rand(15, 35) / 100);
+            $animation_speed = sprintf('%.1f', rand(12, 25) / 10);
+
+            $evolution_css = "\n/* --- AI 15-MIN AUTOMATED EVOLUTION [$timestamp] --- */\n" .
+                ":root {\n" .
+                "  --ai-primary-accent: hsl($hue, 85%, 60%);\n" .
+                "  --ai-glow-rgba: rgba(56, 189, 248, $glow_opacity);\n" .
+                "  --ai-pulse-duration: {$animation_speed}s;\n" .
+                "}\n" .
+                ".ai-evolved-card { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); border-color: var(--ai-primary-accent) !important; }\n" .
+                ".ai-glow-pulse { animation: aiGlowPulse var(--ai-pulse-duration) infinite alternate ease-in-out; }\n" .
+                "@keyframes aiGlowPulse { 0% { box-shadow: 0 0 10px var(--ai-glow-rgba); } 100% { box-shadow: 0 0 25px var(--ai-primary-accent); } }\n";
+
+            file_put_contents($theme_file, $evolution_css, FILE_APPEND);
+            $actions[] = "UI & Animation Evolution Applied (Hue: {$hue}deg, Pulse: {$animation_speed}s)";
+        }
+
+        // 3. Record Patch in AI Log History
+        $log_entry = array(
+            'id' => 'patch_' . time(),
+            'timestamp' => $timestamp,
+            'type' => '15_MIN_CRON_EVOLUTION',
+            'actions' => $actions
+        );
+
+        $this->recordPatchHistory($log_entry);
+
+        return array(
+            'success' => true,
+            'timestamp' => $timestamp,
+            'actions' => $actions,
+            'next_run_in' => '15 minutes'
+        );
+    }
+
+    /*
         Executes code patches or modifications on target files safely
     */
     public function applyCodePatch($target_file_rel, $code_snippet, $action = 'append')
@@ -79,6 +137,15 @@ class Model_ai_agent extends CI_Model
             file_put_contents($target_path, "\n" . $code_snippet, FILE_APPEND);
         }
 
+        $log_entry = array(
+            'id' => 'patch_' . time(),
+            'timestamp' => date('Y-m-d H:i:s'),
+            'type' => 'MANUAL_CODE_PATCH',
+            'target_file' => $target_file_rel,
+            'actions' => array("Patched file $target_file_rel with action $action")
+        );
+        $this->recordPatchHistory($log_entry);
+
         return array(
             'success' => true,
             'message' => "Successfully patched file: $target_file_rel",
@@ -93,6 +160,10 @@ class Model_ai_agent extends CI_Model
     {
         $prompt = strtolower(trim($prompt));
 
+        if (strpos($prompt, 'cron') !== false || strpos($prompt, 'evolve') !== false || strpos($prompt, 'auto') !== false) {
+            return $this->autoEvolveSite();
+        }
+
         if (strpos($prompt, 'check') !== false || strpos($prompt, 'diagnose') !== false || strpos($prompt, 'fallback') !== false) {
             $report = $this->runDiagnostics();
             return array(
@@ -102,23 +173,37 @@ class Model_ai_agent extends CI_Model
             );
         }
 
-        if (strpos($prompt, 'theme') !== false || strpos($prompt, 'color') !== false || strpos($prompt, 'css') !== false) {
-            // Self-upgrade 21st.dev theme stylesheet
-            $patch = "/* AI Auto-Optimization Patch */\n.ai-optimized-badge { display: inline-block; padding: 2px 8px; border-radius: 9999px; background: rgba(56,189,248,0.1); color: #38bdf8; font-size: 10px; uppercase; }";
-            $res = $this->applyCodePatch('assets/css/21stdev-theme.css', $patch, 'append');
-            return array(
-                'status' => 'success',
-                'action_taken' => 'Autonomous UI Theme Enhancement Applied',
-                'details' => $res
-            );
+        return $this->autoEvolveSite();
+    }
+
+    /*
+        Patch History Manager
+    */
+    public function getPatchHistory()
+    {
+        if (file_exists($this->log_file)) {
+            $data = json_decode(file_get_contents($this->log_file), true);
+            return is_array($data) ? array_reverse($data) : array();
+        }
+        return array();
+    }
+
+    private function recordPatchHistory($entry)
+    {
+        $history = array();
+        if (file_exists($this->log_file)) {
+            $data = json_decode(file_get_contents($this->log_file), true);
+            if (is_array($data)) {
+                $history = $data;
+            }
+        }
+        $history[] = $entry;
+
+        // Keep last 50 evolution patches
+        if (count($history) > 50) {
+            $history = array_slice($history, -50);
         }
 
-        return array(
-            'status' => 'success',
-            'action_taken' => 'AI Prompt Processed & Verified',
-            'details' => array(
-                'message' => 'Autonomous AI agent parsed instructions: "' . $prompt . '". System integrity verified 100%.'
-            )
-        );
+        file_put_contents($this->log_file, json_encode($history, JSON_PRETTY_PRINT));
     }
 }
