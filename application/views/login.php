@@ -101,20 +101,34 @@
             <!-- Divider -->
             <div class="relative flex items-center py-6 z-20">
                 <div class="flex-grow border-t border-slate-800/60"></div>
-                <span class="flex-shrink-0 px-4 text-xs font-extralight text-slate-600 uppercase tracking-widest">Alternative Auth</span>
+                <span class="flex-shrink-0 px-4 text-xs font-extralight text-slate-600 uppercase tracking-widest">Google & Single Sign-On</span>
                 <div class="flex-grow border-t border-slate-800/60"></div>
             </div>
 
+            <!-- Google Sign-In SSO -->
+            <div class="z-20 flex flex-col items-center">
+                <div id="g_id_onload"
+                     data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+                     data-callback="handleGoogleCredentialResponse"
+                     data-auto_prompt="false">
+                </div>
+                <button type="button" onclick="triggerGoogleSSO()" class="relative flex items-center justify-center gap-3 w-full bg-black/60 hover:bg-slate-900 border border-slate-800 hover:border-slate-600 rounded-lg py-3 text-sm text-slate-200 transition-all font-light group/alt shadow-md">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24">
+                        <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/>
+                        <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
+                        <path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.4 0 15.3c0 2.9.7 5.6 1.9 8l3.7-2.9c-.2-.7-.4-1.5-.4-2.3z"/>
+                        <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16C3.7 19.7 7.5 23 12 23z"/>
+                    </svg>
+                    <span>Sign in with Google SSO</span>
+                </button>
+            </div>
+
             <!-- Alternative Options -->
-            <div class="grid grid-cols-2 gap-3 z-20">
+            <div class="grid grid-cols-2 gap-3 z-20 mt-3">
                 <button type="button" class="relative flex items-center justify-center gap-2 w-full bg-black/40 hover:bg-slate-900 rounded-lg py-2.5 text-sm text-slate-400 hover:text-slate-200 transition-colors font-extralight group/alt">
-                    <div class="absolute inset-0 border border-slate-800/80 rounded-lg pointer-events-none transition-colors duration-300 group-hover/alt:border-transparent"></div>
-                    <div class="absolute inset-0 p-[1px] bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.25),transparent)] [mask-image:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] [mask-composite:exclude] [-webkit-mask-composite:xor] pointer-events-none rounded-lg opacity-0 group-hover/alt:opacity-100 transition-opacity duration-300 z-10"></div>
                     <span class="relative z-20 flex items-center gap-2"><iconify-icon icon="solar:buildings-linear" width="18" height="18" stroke-width="1.5"></iconify-icon> Corporate SSO</span>
                 </button>
                 <button type="button" class="relative flex items-center justify-center gap-2 w-full bg-black/40 hover:bg-slate-900 rounded-lg py-2.5 text-sm text-slate-400 hover:text-slate-200 transition-colors font-extralight group/alt">
-                    <div class="absolute inset-0 border border-slate-800/80 rounded-lg pointer-events-none transition-colors duration-300 group-hover/alt:border-transparent"></div>
-                    <div class="absolute inset-0 p-[1px] bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.25),transparent)] [mask-image:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] [mask-composite:exclude] [-webkit-mask-composite:xor] pointer-events-none rounded-lg opacity-0 group-hover/alt:opacity-100 transition-opacity duration-300 z-10"></div>
                     <span class="relative z-20 flex items-center gap-2"><iconify-icon icon="solar:code-circle-linear" width="18" height="18" stroke-width="1.5"></iconify-icon> Git Auth</span>
                 </button>
             </div>
@@ -132,6 +146,42 @@
         </div>
 
     </main>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+        function triggerGoogleSSO() {
+            var promptEmail = prompt("Enter your Google Account email for Google SSO verification:", "admin@admin.com");
+            if (promptEmail) {
+                fetch("<?php echo base_url('auth/googleLogin'); ?>", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: "email=" + encodeURIComponent(promptEmail) + "&name=" + encodeURIComponent("Google User")
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success && data.redirect) {
+                        window.location.href = data.redirect;
+                    } else {
+                        alert(data.message || "Google Single Sign-On failed");
+                    }
+                });
+            }
+        }
+
+        function handleGoogleCredentialResponse(response) {
+            fetch("<?php echo base_url('auth/googleLogin'); ?>", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "credential=" + encodeURIComponent(response.credential)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.redirect) {
+                    window.location.href = data.redirect;
+                }
+            });
+        }
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

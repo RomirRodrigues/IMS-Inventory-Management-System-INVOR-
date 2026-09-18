@@ -48,4 +48,39 @@ class Model_auth extends CI_Model
 			}
 		}
 	}
+
+	public function getUserByEmail($email)
+	{
+		if($email) {
+			$sql = "SELECT * FROM `users` WHERE email = ?";
+			$query = $this->db->query($sql, array($email));
+			return $query->row_array();
+		}
+		return false;
+	}
+
+	public function createGoogleUser($email, $name = 'Google User')
+	{
+		$username = strtolower(explode('@', $email)[0]);
+		$random_password = password_hash(bin2hex(random_bytes(8)), PASSWORD_DEFAULT);
+
+		$data = array(
+			'username' => $username,
+			'password' => $random_password,
+			'email' => $email,
+			'firstname' => $name,
+			'lastname' => '(Google SSO)',
+			'phone' => '0000000000',
+			'gender' => 1
+		);
+
+		$this->db->insert('users', $data);
+		$user_id = $this->db->insert_id();
+
+		// Assign Admin Group Permission by default (group_id = 1)
+		$group_data = array('user_id' => $user_id, 'group_id' => 1);
+		$this->db->insert('user_group', $group_data);
+
+		return $this->getUserByEmail($email);
+	}
 }

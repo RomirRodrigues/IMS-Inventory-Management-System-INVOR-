@@ -8,13 +8,11 @@ class Auth extends Admin_Controller
 	public function __construct()
 	{
 		parent::__construct();
-
 		$this->load->model('model_auth');
 	}
 
 	/* 
 		Check if the login form is submitted, and validates the user credential
-		If not submitted it redirects to the login page
 	*/
 	public function login()
 	{
@@ -35,7 +33,6 @@ class Auth extends Admin_Controller
         $this->form_validation->set_rules('password', 'Password', 'required');
 
         if ($this->form_validation->run() == TRUE) {
-            // true case
            	$email_exists = $this->model_auth->check_email($this->input->post('email'));
 
            	if($email_exists == TRUE) {
@@ -46,15 +43,15 @@ class Auth extends Admin_Controller
 					$this->session->unset_userdata('login_attempts');
 					$this->session->unset_userdata('last_attempt_time');
 
-           			$logged_in_sess = array(
-           				'id' => $login['id'],
-				        'username'  => $login['username'],
-				        'email'     => $login['email'],
-				        'logged_in' => TRUE
-					);
+					// Generate 2FA 6-digit PIN
+					$two_factor_code = (string)rand(100000, 999999);
+					$this->session->set_userdata(array(
+						'pending_user' => $login,
+						'two_factor_code' => $two_factor_code,
+						'two_factor_expires' => time() + 300
+					));
 
-					$this->session->set_userdata($logged_in_sess);
-           			redirect('dashboard', 'refresh');
+           			redirect('auth/verify_2fa', 'refresh');
            		}
            		else {
 					$attempts++;
@@ -74,9 +71,98 @@ class Auth extends Admin_Controller
            	}	
         }
         else {
-            // false case
             $this->load->view('login');
         }	
+	}
+
+	/*
+	* 2FA 6-Digit PIN Verification Method
+	*/
+	public function verify_2fa()
+	{
+		$pending_user = $this->session->userdata('pending_user');
+		$expected_code = $this->session->userdata('two_factor_code');
+		$expires = $this->session->userdata('two_factor_expires');
+
+		if (empty($pending_user) || empty($expected_code)) {
+			redirect('auth/login', 'refresh');
+			return;
+		}
+
+		if (time() > $expires) {
+			$this->session->unset_userdata(array('pending_user', 'two_factor_code', 'two_factor_expires'));
+			$this->data['errors'] = '2FA Security PIN expired. Please log in again.';
+			$this->load->view('login', $this->data);
+			return;
+		}
+
+		if ($this->input->post('pin')) {
+			$entered_pin = trim($this->input->post('pin'));
+			if ($entered_pin === (string)$expected_code) {
+				// Authenticate session
+				$logged_in_sess = array(
+					'id' => $pending_user['id'],
+					'username'  => $pending_user['username'],
+					'email'     => $pending_user['email'],
+					'logged_in' => TRUE
+				);
+				$this->session->set_userdata($logged_in_sess);
+				$this->session->unset_userdata(array('pending_user', 'two_factor_code', 'two_factor_expires'));
+				redirect('dashboard', 'refresh');
+				return;
+			} else {
+				$this->data['errors'] = 'Invalid 2FA Security PIN code!';
+			}
+		}
+
+		$this->data['two_factor_code'] = $expected_code;
+		$this->load->view('auth/verify_2fa', $this->data);
+	}
+
+	/*
+	* Google OAuth SSO Login Endpoint
+	*/
+	public function googleLogin()
+	{
+		$google_email = $this->input->post('email');
+		$google_name = $this->input->post('name');
+
+		if (empty($google_email)) {
+			$json_data = json_decode(file_get_contents('php://input'), true);
+			if ($json_data) {
+				$google_email = isset($json_data['email']) ? $json_data['email'] : '';
+				$google_name = isset($json_data['name']) ? $json_data['name'] : 'Google User';
+			}
+		}
+
+		if (empty($google_email)) {
+			echo json_encode(array('success' => false, 'message' => 'Google email payload required'));
+			return;
+		}
+
+		$user = $this->model_auth->getUserByEmail($google_email);
+
+		if (!$user) {
+			// Auto-register Google account
+			$user = $this->model_auth->createGoogleUser($google_email, $google_name);
+		}
+
+		if ($user) {
+			// Generate 2FA 6-digit PIN
+			$two_factor_code = (string)rand(100000, 999999);
+			$this->session->set_userdata(array(
+				'pending_user' => $user,
+				'two_factor_code' => $two_factor_code,
+				'two_factor_expires' => time() + 300
+			));
+
+			echo json_encode(array(
+				'success' => true,
+				'redirect' => base_url('auth/verify_2fa')
+			));
+		} else {
+			echo json_encode(array('success' => false, 'message' => 'Google authentication failed'));
+		}
 	}
 
 	/*
