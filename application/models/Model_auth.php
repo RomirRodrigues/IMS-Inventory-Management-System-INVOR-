@@ -8,13 +8,14 @@ class Model_auth extends CI_Model
 	}
 
 	/* 
-		Checks if user exists by email OR username
+		Checks if user exists by email OR username (case-insensitive & trimmed)
 	*/
 	public function check_email($email) 
 	{
 		if($email) {
-			$sql = 'SELECT * FROM `users` WHERE email = ? OR username = ?';
-			$query = $this->db->query($sql, array($email, $email));
+			$clean = trim(strtolower($email));
+			$sql = 'SELECT * FROM `users` WHERE LOWER(TRIM(email)) = ? OR LOWER(TRIM(username)) = ?';
+			$query = $this->db->query($sql, array($clean, $clean));
 			return ($query->num_rows() >= 1) ? true : false;
 		}
 
@@ -24,8 +25,9 @@ class Model_auth extends CI_Model
 	public function check_username($username)
 	{
 		if($username) {
-			$sql = 'SELECT * FROM `users` WHERE username = ? OR email = ?';
-			$query = $this->db->query($sql, array($username, $username));
+			$clean = trim(strtolower($username));
+			$sql = 'SELECT * FROM `users` WHERE LOWER(TRIM(username)) = ? OR LOWER(TRIM(email)) = ?';
+			$query = $this->db->query($sql, array($clean, $clean));
 			return ($query->num_rows() >= 1) ? true : false;
 		}
 		return false;
@@ -36,8 +38,9 @@ class Model_auth extends CI_Model
 	*/
 	public function login($email, $password) {
 		if($email && $password) {
-			$sql = "SELECT * FROM `users` WHERE email = ? OR username = ?";
-			$query = $this->db->query($sql, array($email, $email));
+			$clean = trim(strtolower($email));
+			$sql = "SELECT * FROM `users` WHERE LOWER(TRIM(email)) = ? OR LOWER(TRIM(username)) = ?";
+			$query = $this->db->query($sql, array($clean, $clean));
 
 			if($query->num_rows() >= 1) {
 				$result = $query->row_array();
@@ -59,8 +62,9 @@ class Model_auth extends CI_Model
 	public function getUserByEmail($email)
 	{
 		if($email) {
-			$sql = "SELECT * FROM `users` WHERE email = ? OR username = ?";
-			$query = $this->db->query($sql, array($email, $email));
+			$clean = trim(strtolower($email));
+			$sql = "SELECT * FROM `users` WHERE LOWER(TRIM(email)) = ? OR LOWER(TRIM(username)) = ?";
+			$query = $this->db->query($sql, array($clean, $clean));
 			return $query->row_array();
 		}
 		return false;
@@ -68,7 +72,8 @@ class Model_auth extends CI_Model
 
 	public function createGoogleUser($email, $name = 'Google User')
 	{
-		$username = strtolower(explode('@', $email)[0]);
+		$clean_email = trim(strtolower($email));
+		$username = strtolower(explode('@', $clean_email)[0]);
 		// Ensure unique username
 		if ($this->check_username($username)) {
 			$username .= rand(100, 999);
@@ -79,7 +84,7 @@ class Model_auth extends CI_Model
 		$data = array(
 			'username' => $username,
 			'password' => $random_password,
-			'email' => $email,
+			'email' => $clean_email,
 			'firstname' => $name,
 			'lastname' => '(Google SSO)',
 			'phone' => '0000000000',
@@ -93,19 +98,21 @@ class Model_auth extends CI_Model
 		$group_data = array('user_id' => $user_id, 'group_id' => 1);
 		$this->db->insert('user_group', $group_data);
 
-		return $this->getUserByEmail($email);
+		return $this->getUserByEmail($clean_email);
 	}
 
 	public function registerUser($firstname, $lastname, $email, $username, $password, $phone = '0000000000')
 	{
+		$clean_email = trim(strtolower($email));
+		$clean_username = trim($username);
 		$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 		$data = array(
-			'username' => $username,
+			'username' => $clean_username,
 			'password' => $hashed_password,
-			'email' => $email,
-			'firstname' => $firstname,
-			'lastname' => $lastname,
+			'email' => $clean_email,
+			'firstname' => trim($firstname),
+			'lastname' => trim($lastname),
 			'phone' => $phone,
 			'gender' => 1
 		);
@@ -117,6 +124,6 @@ class Model_auth extends CI_Model
 		$group_data = array('user_id' => $user_id, 'group_id' => 1);
 		$this->db->insert('user_group', $group_data);
 
-		return $this->getUserByEmail($email);
+		return $this->getUserByEmail($clean_email);
 	}
 }

@@ -33,10 +33,13 @@ class Auth extends Admin_Controller
         $this->form_validation->set_rules('password', 'Password', 'required');
 
         if ($this->form_validation->run() == TRUE) {
-           	$user_exists = $this->model_auth->check_email($this->input->post('email'));
+			$email_input = trim($this->input->post('email'));
+			$password_input = trim($this->input->post('password'));
+
+           	$user_exists = $this->model_auth->check_email($email_input);
 
            	if($user_exists == TRUE) {
-           		$login = $this->model_auth->login($this->input->post('email'), $this->input->post('password'));
+           		$login = $this->model_auth->login($email_input, $password_input);
 
            		if($login) {
 					// Reset attempt counter
@@ -57,7 +60,7 @@ class Auth extends Admin_Controller
 					$attempts++;
 					$this->session->set_userdata('login_attempts', $attempts);
 					$this->session->set_userdata('last_attempt_time', time());
-           			$this->data['errors'] = 'Incorrect username/password combination (Attempt '.$attempts.' of 5)';
+           			$this->data['errors'] = 'Incorrect security password! Please check your credentials (Attempt '.$attempts.' of 5).';
            			$this->load->view('login', $this->data);
            		}
            	}
