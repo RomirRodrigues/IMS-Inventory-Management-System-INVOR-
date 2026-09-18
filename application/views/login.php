@@ -23,8 +23,8 @@
         <canvas id="flow-canvas" class="absolute inset-0 w-full h-full z-10"></canvas>
     </div>
 
-    <!-- Main Content (Centered & Fully Visible) -->
-    <main class="flex-grow flex flex-col items-center justify-center relative z-30 px-4 py-8 min-h-screen w-full">
+    <!-- Main Content (Top Aligned for Instant Visibility) -->
+    <main class="flex-grow flex flex-col items-center justify-start relative z-30 px-4 pt-6 pb-12 w-full min-h-screen">
         
         <!-- Gateway Card with Hover Border Gradient -->
         <div class="max-w-md w-full bg-black/95 backdrop-blur-xl rounded-2xl p-6 md:p-7 shadow-[0_0_50px_rgba(0,0,0,0.9)] flex flex-col relative group border border-white/[0.1]">
