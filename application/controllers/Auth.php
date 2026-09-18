@@ -65,7 +65,7 @@ class Auth extends Admin_Controller
 				$attempts++;
 				$this->session->set_userdata('login_attempts', $attempts);
 				$this->session->set_userdata('last_attempt_time', time());
-           		$this->data['errors'] = 'Email does not exist';
+           		$this->data['errors'] = 'Email does not exist. Click "Create New Account" below to register!';
 
            		$this->load->view('login', $this->data);
            	}	
@@ -73,6 +73,64 @@ class Auth extends Admin_Controller
         else {
             $this->load->view('login');
         }	
+	}
+
+	/*
+	* New User Registration Endpoint
+	*/
+	public function register()
+	{
+		$this->logged_in();
+
+		$this->form_validation->set_rules('firstname', 'First Name', 'required');
+		$this->form_validation->set_rules('lastname', 'Last Name', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+		$this->form_validation->set_rules('username', 'Username', 'required');
+		$this->form_validation->set_rules('password', 'Password', 'required|min_length[5]');
+
+		if ($this->form_validation->run() == TRUE) {
+			$email = trim($this->input->post('email'));
+			$username = trim($this->input->post('username'));
+
+			if ($this->model_auth->check_email($email)) {
+				$this->data['reg_errors'] = 'This email is already registered! Please log in.';
+				$this->load->view('login', $this->data);
+				return;
+			}
+
+			if ($this->model_auth->check_username($username)) {
+				$this->data['reg_errors'] = 'This username is already taken! Choose another username.';
+				$this->load->view('login', $this->data);
+				return;
+			}
+
+			$user = $this->model_auth->registerUser(
+				$this->input->post('firstname'),
+				$this->input->post('lastname'),
+				$email,
+				$username,
+				$this->input->post('password'),
+				$this->input->post('phone') ? $this->input->post('phone') : '0000000000'
+			);
+
+			if ($user) {
+				// Generate 2FA 6-digit PIN
+				$two_factor_code = (string)rand(100000, 999999);
+				$this->session->set_userdata(array(
+					'pending_user' => $user,
+					'two_factor_code' => $two_factor_code,
+					'two_factor_expires' => time() + 300
+				));
+
+				redirect('auth/verify_2fa', 'refresh');
+			} else {
+				$this->data['reg_errors'] = 'Account registration failed. Please try again.';
+				$this->load->view('login', $this->data);
+			}
+		} else {
+			$this->data['reg_errors'] = validation_errors();
+			$this->load->view('login', $this->data);
+		}
 	}
 
 	/*
@@ -120,7 +178,7 @@ class Auth extends Admin_Controller
 	}
 
 	/*
-	* Google OAuth SSO Login Endpoint
+	* Google OAuth SSO Login & Auto-Registration Endpoint
 	*/
 	public function googleLogin()
 	{
@@ -143,7 +201,7 @@ class Auth extends Admin_Controller
 		$user = $this->model_auth->getUserByEmail($google_email);
 
 		if (!$user) {
-			// Auto-register Google account
+			// Auto-register Google account into database
 			$user = $this->model_auth->createGoogleUser($google_email, $google_name);
 		}
 

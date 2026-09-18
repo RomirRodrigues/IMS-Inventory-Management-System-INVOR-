@@ -16,9 +16,19 @@ class Model_auth extends CI_Model
 			$sql = 'SELECT * FROM `users` WHERE email = ?';
 			$query = $this->db->query($sql, array($email));
 			$result = $query->num_rows();
-			return ($result == 1) ? true : false;
+			return ($result >= 1) ? true : false;
 		}
 
+		return false;
+	}
+
+	public function check_username($username)
+	{
+		if($username) {
+			$sql = 'SELECT * FROM `users` WHERE username = ?';
+			$query = $this->db->query($sql, array($username));
+			return ($query->num_rows() >= 1) ? true : false;
+		}
 		return false;
 	}
 
@@ -27,10 +37,10 @@ class Model_auth extends CI_Model
 	*/
 	public function login($email, $password) {
 		if($email && $password) {
-			$sql = "SELECT * FROM `users` WHERE email = ?";
-			$query = $this->db->query($sql, array($email));
+			$sql = "SELECT * FROM `users` WHERE email = ? OR username = ?";
+			$query = $this->db->query($sql, array($email, $email));
 
-			if($query->num_rows() == 1) {
+			if($query->num_rows() >= 1) {
 				$result = $query->row_array();
 
 				$hash_password = password_verify($password, $result['password']);
@@ -40,8 +50,6 @@ class Model_auth extends CI_Model
 				else {
 					return false;
 				}
-
-				
 			}
 			else {
 				return false;
@@ -62,6 +70,11 @@ class Model_auth extends CI_Model
 	public function createGoogleUser($email, $name = 'Google User')
 	{
 		$username = strtolower(explode('@', $email)[0]);
+		// Ensure unique username
+		if ($this->check_username($username)) {
+			$username .= rand(100, 999);
+		}
+
 		$random_password = password_hash(bin2hex(random_bytes(8)), PASSWORD_DEFAULT);
 
 		$data = array(
@@ -78,6 +91,30 @@ class Model_auth extends CI_Model
 		$user_id = $this->db->insert_id();
 
 		// Assign Admin Group Permission by default (group_id = 1)
+		$group_data = array('user_id' => $user_id, 'group_id' => 1);
+		$this->db->insert('user_group', $group_data);
+
+		return $this->getUserByEmail($email);
+	}
+
+	public function registerUser($firstname, $lastname, $email, $username, $password, $phone = '0000000000')
+	{
+		$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+		$data = array(
+			'username' => $username,
+			'password' => $hashed_password,
+			'email' => $email,
+			'firstname' => $firstname,
+			'lastname' => $lastname,
+			'phone' => $phone,
+			'gender' => 1
+		);
+
+		$this->db->insert('users', $data);
+		$user_id = $this->db->insert_id();
+
+		// Assign Admin Group Permission (group_id = 1)
 		$group_data = array('user_id' => $user_id, 'group_id' => 1);
 		$this->db->insert('user_group', $group_data);
 

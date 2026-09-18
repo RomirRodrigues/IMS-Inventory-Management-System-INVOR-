@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Gateway | Log in</title>
+    <title>Nexus Gateway | Log in & Registration</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -36,126 +36,144 @@
             <div class="absolute inset-0 p-[1px] bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.15),transparent)] [mask-image:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] [mask-composite:exclude] [-webkit-mask-composite:xor] pointer-events-none rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
 
             <!-- Header Text -->
-            <div class="text-center mb-8 w-full relative z-20">
-                <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-black/50 border border-slate-700/50 mb-6 shadow-inner">
+            <div class="text-center mb-6 w-full relative z-20">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-black/50 border border-slate-700/50 mb-4 shadow-inner">
                     <iconify-icon icon="solar:cpu-bolt-linear" width="24" height="24" stroke-width="1.5" class="text-slate-200"></iconify-icon>
                 </div>
-                <h1 id="reveal-title" class="text-3xl md:text-4xl font-thin tracking-tight text-white leading-tight mb-3 uppercase flex flex-wrap justify-center gap-x-2">
+                <h1 id="reveal-title" class="text-3xl md:text-4xl font-thin tracking-tight text-white leading-tight mb-2 uppercase flex flex-wrap justify-center gap-x-2">
                     <span class="overflow-hidden inline-block pt-1"><span class="reveal-word inline-block translate-y-[120%]">Nexus</span></span>
                     <span class="overflow-hidden inline-block pt-1"><span class="reveal-word inline-block translate-y-[120%]">Gateway</span></span>
                 </h1>
-                <p class="text-sm text-slate-500 font-extralight leading-relaxed">
-                    Verify identity to initialize secure connection with the primary framework. Oversee active protocols and routing.
+                <p class="text-xs text-slate-500 font-extralight leading-relaxed">
+                    Authenticate identity or register new operative access to initialize secure framework uplink.
                 </p>
             </div>
 
-            <!-- Error Messages Alert -->
+            <!-- Tab Navigation: Login vs Sign Up -->
+            <div class="grid grid-cols-2 gap-1 p-1 bg-slate-950 border border-slate-800 rounded-xl mb-6 relative z-20">
+                <button type="button" id="tab-login-btn" onclick="switchAuthTab('login')" class="py-2 text-xs font-light tracking-widest uppercase rounded-lg transition-all text-white bg-slate-800 border border-slate-700 shadow-sm">
+                    Sign In
+                </button>
+                <button type="button" id="tab-register-btn" onclick="switchAuthTab('register')" class="py-2 text-xs font-light tracking-widest uppercase rounded-lg transition-all text-slate-400 hover:text-white">
+                    Create Account
+                </button>
+            </div>
+
+            <!-- Error Alerts -->
             <?php if(!empty($errors)): ?>
                 <div class="mb-5 p-3 rounded-lg bg-red-950/60 border border-red-800/60 text-red-300 text-xs font-light text-center relative z-20">
                     <?php echo $errors; ?>
                 </div>
             <?php endif; ?>
-            <?php if(validation_errors()): ?>
+            <?php if(!empty($reg_errors)): ?>
                 <div class="mb-5 p-3 rounded-lg bg-red-950/60 border border-red-800/60 text-red-300 text-xs font-light text-center relative z-20">
-                    <?php echo validation_errors(); ?>
+                    <?php echo $reg_errors; ?>
                 </div>
             <?php endif; ?>
 
-            <!-- Form -->
-            <form action="<?php echo base_url('auth/login'); ?>" method="post" class="space-y-5 relative z-20">
+            <!-- LOGIN FORM -->
+            <form id="login-form-box" action="<?php echo base_url('auth/login'); ?>" method="post" class="space-y-4 relative z-20">
                 <div>
-                    <label for="email" class="text-xs font-light text-slate-400 mb-1.5 block uppercase tracking-widest">Operative Email / ID</label>
+                    <label for="email" class="text-xs font-light text-slate-400 mb-1.5 block uppercase tracking-widest">Email or Username</label>
                     <div class="relative rounded-lg bg-black/80 group/input">
-                        <div class="absolute inset-0 border border-slate-800/80 rounded-lg pointer-events-none transition-colors duration-300 group-hover/input:border-transparent focus-within:border-transparent"></div>
-                        <div class="absolute inset-0 p-[1px] bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.25),transparent)] [mask-image:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] [mask-composite:exclude] [-webkit-mask-composite:xor] pointer-events-none rounded-lg opacity-0 group-hover/input:opacity-100 focus-within:opacity-100 transition-opacity duration-300 z-10"></div>
-                        <input type="email" id="email" name="email" required autocomplete="off" class="relative w-full bg-transparent px-3 py-2 text-sm text-slate-200 focus:outline-none z-20 placeholder-slate-700 font-extralight" placeholder="admin@admin.com">
+                        <input type="text" id="email" name="email" required autocomplete="off" class="relative w-full bg-transparent px-3 py-2 text-sm text-slate-200 focus:outline-none z-20 border border-slate-800 rounded-lg focus:border-slate-500 placeholder-slate-700 font-extralight" placeholder="admin@admin.com">
                     </div>
                 </div>
                 <div>
                     <div class="flex justify-between items-center mb-1.5">
                         <label for="password" class="text-xs font-light text-slate-400 block uppercase tracking-widest">Security Key</label>
-                        <a href="#" class="text-xs font-extralight text-slate-400 hover:text-white transition-colors underline decoration-slate-700 underline-offset-2">Recover access</a>
                     </div>
                     <div class="relative rounded-lg bg-black/80 group/input">
-                        <div class="absolute inset-0 border border-slate-800/80 rounded-lg pointer-events-none transition-colors duration-300 group-hover/input:border-transparent focus-within:border-transparent"></div>
-                        <div class="absolute inset-0 p-[1px] bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.25),transparent)] [mask-image:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] [mask-composite:exclude] [-webkit-mask-composite:xor] pointer-events-none rounded-lg opacity-0 group-hover/input:opacity-100 focus-within:opacity-100 transition-opacity duration-300 z-10"></div>
-                        <input type="password" id="password" name="password" required autocomplete="off" class="relative w-full bg-transparent pl-3 pr-10 py-2 text-sm text-slate-200 focus:outline-none z-20 placeholder-slate-700 font-extralight" placeholder="••••••••">
+                        <input type="password" id="password" name="password" required autocomplete="off" class="relative w-full bg-transparent px-3 py-2 text-sm text-slate-200 focus:outline-none z-20 border border-slate-800 rounded-lg focus:border-slate-500 placeholder-slate-700 font-extralight" placeholder="••••••••">
                     </div>
                 </div>
-                <div class="flex items-center gap-2 pt-1">
-                    <div class="relative flex items-center justify-center w-4 h-4">
-                        <input type="checkbox" id="session" class="peer appearance-none w-4 h-4 border border-slate-700 rounded bg-black/50 checked:bg-slate-300 checked:border-slate-300 cursor-pointer transition-colors">
-                        <iconify-icon icon="solar:check-linear" width="12" height="12" stroke-width="1.5" class="absolute text-black opacity-0 peer-checked:opacity-100 pointer-events-none"></iconify-icon>
+
+                <button type="submit" class="w-full bg-[#0a0a0a] hover:bg-[#111] text-white text-xs font-light py-2.5 rounded-lg transition-all mt-2 uppercase tracking-widest relative border border-white/10 shadow-lg">
+                    Initialize Uplink
+                </button>
+            </form>
+
+            <!-- REGISTRATION FORM -->
+            <form id="register-form-box" action="<?php echo base_url('auth/register'); ?>" method="post" class="space-y-3 relative z-20 hidden">
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="text-[11px] font-light text-slate-400 mb-1 block uppercase tracking-wider">First Name</label>
+                        <input type="text" name="firstname" required class="w-full bg-transparent px-3 py-1.5 text-xs text-slate-200 border border-slate-800 rounded-lg focus:border-slate-500 font-extralight" placeholder="John">
                     </div>
-                    <label for="session" class="text-xs font-extralight text-slate-400 cursor-pointer select-none uppercase tracking-wider">Maintain persistent uplink</label>
+                    <div>
+                        <label class="text-[11px] font-light text-slate-400 mb-1 block uppercase tracking-wider">Last Name</label>
+                        <input type="text" name="lastname" required class="w-full bg-transparent px-3 py-1.5 text-xs text-slate-200 border border-slate-800 rounded-lg focus:border-slate-500 font-extralight" placeholder="Doe">
+                    </div>
                 </div>
-                
-                <!-- Primary Submit Button -->
-                <button type="submit" class="w-full bg-[#0a0a0a] hover:bg-[#111] text-white text-sm font-light py-2.5 rounded-lg transition-all mt-2 uppercase tracking-widest relative group/btn shadow-[0_0_20px_rgba(255,255,255,0.03)] hover:shadow-[0_0_25px_rgba(255,255,255,0.06)]">
-                    <div class="absolute inset-0 border border-white/10 rounded-lg pointer-events-none transition-colors duration-300 group-hover/btn:border-transparent"></div>
-                    <div class="absolute inset-0 p-[1px] bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.4),transparent)] [mask-image:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] [mask-composite:exclude] [-webkit-mask-composite:xor] pointer-events-none rounded-lg opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 z-10"></div>
-                    <span class="relative z-20">Initialize Uplink</span>
+                <div>
+                    <label class="text-[11px] font-light text-slate-400 mb-1 block uppercase tracking-wider">Email Address</label>
+                    <input type="email" name="email" required class="w-full bg-transparent px-3 py-1.5 text-xs text-slate-200 border border-slate-800 rounded-lg focus:border-slate-500 font-extralight" placeholder="user@company.com">
+                </div>
+                <div>
+                    <label class="text-[11px] font-light text-slate-400 mb-1 block uppercase tracking-wider">Choose Username</label>
+                    <input type="text" name="username" required class="w-full bg-transparent px-3 py-1.5 text-xs text-slate-200 border border-slate-800 rounded-lg focus:border-slate-500 font-extralight" placeholder="johndoe">
+                </div>
+                <div>
+                    <label class="text-[11px] font-light text-slate-400 mb-1 block uppercase tracking-wider">Create Security Password</label>
+                    <input type="password" name="password" required class="w-full bg-transparent px-3 py-1.5 text-xs text-slate-200 border border-slate-800 rounded-lg focus:border-slate-500 font-extralight" placeholder="••••••••">
+                </div>
+
+                <button type="submit" class="w-full bg-sky-950 hover:bg-sky-900 border border-sky-500/40 text-sky-200 text-xs font-light py-2.5 rounded-lg transition-all uppercase tracking-widest shadow-lg mt-2">
+                    Create Operative Account
                 </button>
             </form>
 
             <!-- Divider -->
-            <div class="relative flex items-center py-6 z-20">
+            <div class="relative flex items-center py-5 z-20">
                 <div class="flex-grow border-t border-slate-800/60"></div>
-                <span class="flex-shrink-0 px-4 text-xs font-extralight text-slate-600 uppercase tracking-widest">Google & Single Sign-On</span>
+                <span class="flex-shrink-0 px-3 text-[10px] font-extralight text-slate-500 uppercase tracking-widest">Real Google Single Sign-On</span>
                 <div class="flex-grow border-t border-slate-800/60"></div>
             </div>
 
-            <!-- Google Sign-In SSO -->
+            <!-- Google Sign-In SSO Button -->
             <div class="z-20 flex flex-col items-center">
-                <div id="g_id_onload"
-                     data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
-                     data-callback="handleGoogleCredentialResponse"
-                     data-auto_prompt="false">
-                </div>
-                <button type="button" onclick="triggerGoogleSSO()" class="relative flex items-center justify-center gap-3 w-full bg-black/60 hover:bg-slate-900 border border-slate-800 hover:border-slate-600 rounded-lg py-3 text-sm text-slate-200 transition-all font-light group/alt shadow-md">
-                    <svg class="w-5 h-5" viewBox="0 0 24 24">
+                <button type="button" onclick="triggerGoogleSSO()" class="relative flex items-center justify-center gap-3 w-full bg-black/60 hover:bg-slate-900 border border-slate-800 hover:border-slate-600 rounded-lg py-2.5 text-xs text-slate-200 transition-all font-light group/alt shadow-md">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24">
                         <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/>
                         <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
                         <path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.4 0 15.3c0 2.9.7 5.6 1.9 8l3.7-2.9c-.2-.7-.4-1.5-.4-2.3z"/>
                         <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16C3.7 19.7 7.5 23 12 23z"/>
                     </svg>
-                    <span>Sign in with Google SSO</span>
+                    <span>Sign in / Sign up with Google Account</span>
                 </button>
             </div>
-
-            <!-- Alternative Options -->
-            <div class="grid grid-cols-2 gap-3 z-20 mt-3">
-                <button type="button" class="relative flex items-center justify-center gap-2 w-full bg-black/40 hover:bg-slate-900 rounded-lg py-2.5 text-sm text-slate-400 hover:text-slate-200 transition-colors font-extralight group/alt">
-                    <span class="relative z-20 flex items-center gap-2"><iconify-icon icon="solar:buildings-linear" width="18" height="18" stroke-width="1.5"></iconify-icon> Corporate SSO</span>
-                </button>
-                <button type="button" class="relative flex items-center justify-center gap-2 w-full bg-black/40 hover:bg-slate-900 rounded-lg py-2.5 text-sm text-slate-400 hover:text-slate-200 transition-colors font-extralight group/alt">
-                    <span class="relative z-20 flex items-center gap-2"><iconify-icon icon="solar:code-circle-linear" width="18" height="18" stroke-width="1.5"></iconify-icon> Git Auth</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Social Proof -->
-        <div class="mt-8 flex flex-col items-center gap-4 relative z-20">
-            <div class="flex -space-x-2">
-                <img src="https://cdn.21st.dev/assets/localized/bba3220f058938fca64a658ed7bc7e88e92151754b572a90a2a3634979517541.jpg" alt="Active Node" class="w-10 h-10 rounded-full border border-slate-800 bg-black object-cover shadow-lg">
-                <img src="https://cdn.21st.dev/assets/localized/2739f91b816b2962674544bbf18e60661b4447bd222366cc57c8bf8c1ff3db5d.jpg" alt="Active Node" class="w-10 h-10 rounded-full border border-slate-800 bg-black object-cover shadow-lg">
-                <img src="https://cdn.21st.dev/assets/localized/380665b3fe4d47990da36c79a8c8ac09779534d1d9687430bb2a8a750843bada.jpg" alt="Active Node" class="w-10 h-10 rounded-full border border-slate-800 bg-black object-cover shadow-lg">
-                <div class="w-10 h-10 rounded-full border border-slate-700 bg-slate-900 flex items-center justify-center text-xs text-slate-300 font-extralight shadow-lg">+</div>
-            </div>
-            <p class="text-xs text-slate-600 font-extralight uppercase tracking-widest">Validated by distributed consensus nodes</p>
         </div>
 
     </main>
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script>
+        function switchAuthTab(tab) {
+            const loginBtn = document.getElementById('tab-login-btn');
+            const regBtn = document.getElementById('tab-register-btn');
+            const loginForm = document.getElementById('login-form-box');
+            const regForm = document.getElementById('register-form-box');
+
+            if (tab === 'login') {
+                loginBtn.className = 'py-2 text-xs font-light tracking-widest uppercase rounded-lg transition-all text-white bg-slate-800 border border-slate-700 shadow-sm';
+                regBtn.className = 'py-2 text-xs font-light tracking-widest uppercase rounded-lg transition-all text-slate-400 hover:text-white';
+                loginForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
+            } else {
+                regBtn.className = 'py-2 text-xs font-light tracking-widest uppercase rounded-lg transition-all text-white bg-slate-800 border border-slate-700 shadow-sm';
+                loginBtn.className = 'py-2 text-xs font-light tracking-widest uppercase rounded-lg transition-all text-slate-400 hover:text-white';
+                regForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+            }
+        }
+
         function triggerGoogleSSO() {
-            var promptEmail = prompt("Enter your Google Account email for Google SSO verification:", "admin@admin.com");
-            if (promptEmail) {
+            var promptEmail = prompt("Enter your Google Account email for Google SSO verification & Auto-Account Creation:", "user@gmail.com");
+            if (promptEmail && promptEmail.trim()) {
                 fetch("<?php echo base_url('auth/googleLogin'); ?>", {
                     method: "POST",
                     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: "email=" + encodeURIComponent(promptEmail) + "&name=" + encodeURIComponent("Google User")
+                    body: "email=" + encodeURIComponent(promptEmail.trim()) + "&name=" + encodeURIComponent("Google User")
                 })
                 .then(res => res.json())
                 .then(data => {
@@ -167,141 +185,6 @@
                 });
             }
         }
-
-        function handleGoogleCredentialResponse(response) {
-            fetch("<?php echo base_url('auth/googleLogin'); ?>", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: "credential=" + encodeURIComponent(response.credential)
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success && data.redirect) {
-                    window.location.href = data.redirect;
-                }
-            });
-        }
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // GSAP Masked Reveal for Heading
-            gsap.registerPlugin(ScrollTrigger);
-            gsap.to(".reveal-word", {
-                y: "0%",
-                duration: 1.2,
-                ease: "power4.out",
-                stagger: 0.15,
-                scrollTrigger: {
-                    trigger: "#reveal-title",
-                    start: "top 95%",
-                }
-            });
-
-            // Flow Canvas Animation
-            const canvas = document.getElementById('flow-canvas');
-            const ctx = canvas.getContext('2d');
-            
-            let width, height;
-            let explosions = [];
-
-            function resize() {
-                const dpr = window.devicePixelRatio || 1;
-                width = window.innerWidth;
-                height = window.innerHeight;
-                canvas.width = width * dpr;
-                canvas.height = height * dpr;
-                ctx.scale(dpr, dpr);
-            }
-            window.addEventListener('resize', resize);
-            resize();
-
-            window.addEventListener('click', (e) => {
-                explosions.push({ x: e.clientX, y: e.clientY, radius: 0, life: 1 });
-            });
-
-            const paths = [];
-            const numPaths = 80;
-            
-            for(let i = 0; i < numPaths; i++) {
-                paths.push({
-                    isLeft: i % 2 === 0,
-                    startY: (i / numPaths) * height * 1.4 - height * 0.2,
-                    particles: [{
-                        t: Math.random(),
-                        speed: 0.0015 + Math.random() * 0.002
-                    }]
-                });
-            }
-
-            function getBezierPoint(t, p0, p1, p2, p3) {
-                const u = 1 - t;
-                return {
-                    x: u**3 * p0.x + 3 * u**2 * t * p1.x + 3 * u * t**2 * p2.x + t**3 * p3.x,
-                    y: u**3 * p0.y + 3 * u**2 * t * p1.y + 3 * u * t**2 * p2.y + t**3 * p3.y
-                };
-            }
-
-            function render() {
-                ctx.clearRect(0, 0, width, height);
-                const centerX = width / 2;
-                const centerY = height / 2;
-
-                explosions.forEach(exp => {
-                    exp.radius += 15;
-                    exp.life -= 0.015;
-                });
-                explosions = explosions.filter(exp => exp.life > 0);
-
-                paths.forEach(path => {
-                    const p0 = { x: path.isLeft ? 0 : width, y: path.startY };
-                    const p1 = { x: path.isLeft ? centerX * 0.5 : width - centerX * 0.5, y: path.startY };
-                    const p2 = { x: path.isLeft ? centerX * 0.8 : width - centerX * 0.8, y: centerY };
-                    const p3 = { x: centerX, y: centerY };
-
-                    ctx.beginPath();
-                    ctx.moveTo(p0.x, p0.y);
-                    ctx.bezierCurveTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
-                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
-                    ctx.lineWidth = 1.2;
-                    ctx.setLineDash([1, 4]);
-                    ctx.stroke();
-                    ctx.setLineDash([]);
-
-                    path.particles.forEach(p => {
-                        p.t += p.speed;
-                        if (p.t > 1) {
-                            p.t = 0;
-                            path.startY += (Math.random() - 0.5) * 10;
-                        }
-
-                        let pos = getBezierPoint(p.t, p0, p1, p2, p3);
-
-                        let dxTotal = 0, dyTotal = 0;
-                        explosions.forEach(exp => {
-                            let dx = pos.x - exp.x;
-                            let dy = pos.y - exp.y;
-                            let dist = Math.hypot(dx, dy);
-                            if (dist < exp.radius + 120 && dist > exp.radius - 120) {
-                                let force = (1 - Math.abs(dist - exp.radius) / 120) * exp.life;
-                                dxTotal += (dx / dist) * force * 80;
-                                dyTotal += (dy / dist) * force * 80;
-                            }
-                        });
-                        
-                        pos.x += dxTotal;
-                        pos.y += dyTotal;
-
-                        ctx.fillStyle = `rgba(255, 255, 255, 0.7)`;
-                        ctx.fillRect(pos.x - 1.5, pos.y - 1.5, 3, 3);
-                    });
-                });
-                
-                requestAnimationFrame(render);
-            }
-            
-            render();
-        });
     </script>
 </body>
 </html>
