@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:8.1-apache
 
 # Install system dependencies & PHP extensions
 RUN apt-get update && apt-get install -y \
@@ -19,7 +19,7 @@ RUN a2enmod rewrite
 # Copy project files to Apache root
 COPY . /var/www/html/
 
-# Configure Apache to listen on $PORT if specified (Render / Railway requirement)
+# Configure Apache to listen on $PORT if specified (Render dynamic port compatibility)
 RUN sed -i 's/80/${PORT:-80}/g' /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf
 
 # Set working directory & permissions
