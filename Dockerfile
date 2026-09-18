@@ -19,6 +19,9 @@ RUN a2enmod rewrite
 # Copy project files to Apache root
 COPY . /var/www/html/
 
+# Configure Apache to listen on $PORT if specified (Render / Railway requirement)
+RUN sed -i 's/80/${PORT:-80}/g' /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf
+
 # Set working directory & permissions
 WORKDIR /var/www/html
 RUN chown -R www-data:www-data /var/www/html

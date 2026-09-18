@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: ims-inventory-system
+    env: docker
+    plan: free
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: MYSQL_HOST
+        sync: false
+      - key: MYSQL_USER
+        sync: false
+      - key: MYSQL_PASSWORD
+        sync: false
+      - key: MYSQL_DATABASE
+        value: stock
