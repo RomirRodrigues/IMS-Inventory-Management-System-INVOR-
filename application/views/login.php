@@ -1,95 +1,257 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Log in</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->
-  
-  
-  <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/bootstrap/dist/css/bootstrap.min.css') ?>">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/font-awesome/css/font-awesome.min.css') ?>">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/Ionicons/css/ionicons.min.css') ?>">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/AdminLTE.min.css') ?>">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="<?php echo base_url('assets/plugins/iCheck/square/blue.css') ?>">
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
-  <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Gateway | Log in</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
 </head>
-<body class="hold-transition login-page">
-<div class="login-box">
-  <div class="login-logo">
-    <a href="<?php echo base_url('auth/login'); ?>"><b>Login</b></a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
+<body class="bg-black text-slate-300 antialiased min-h-screen flex flex-col selection:bg-slate-700 selection:text-white relative" style="font-family: 'Inter', sans-serif;">
 
-    <?php echo validation_errors(); ?>  
+    <!-- Global Dither Overlay -->
+    <div class="fixed inset-0 z-50 pointer-events-none opacity-[0.15]" style="background-image: url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%202%202%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23ffffff%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23ffffff%22%2F%3E%3C%2Fsvg%3E'); background-size: 2px 2px;"></div>
 
-    <?php if(!empty($errors)) {
-      echo $errors;
-    } ?>
+    <!-- Visualization Background Canvas -->
+    <div class="fixed inset-0 z-0 overflow-hidden bg-black">
+        <div class="absolute inset-0 z-0 opacity-10" style="background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.01) 0%, rgba(0, 0, 0, 0) 80%);"></div>
+        <canvas id="flow-canvas" class="absolute inset-0 w-full h-full z-10"></canvas>
+    </div>
 
-    <form action="<?php echo base_url('auth/login') ?>" method="post">
-      <div class="form-group has-feedback">
-        <input type="email" class="form-control" name="email" id="email" placeholder="Email" autocomplete="off">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-      </div>
-      <div class="row">
-        <div class="col-xs-8">
-          <div class="checkbox icheck">
-            <label>
-              <input type="checkbox"> Remember Me
-            </label>
-          </div>
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col items-center justify-center relative z-30 px-6 py-12 min-h-screen w-full">
+        
+        <!-- Gateway Card with Hover Border Gradient -->
+        <div class="max-w-md w-full bg-black/95 backdrop-blur-xl rounded-2xl p-7 md:p-8 shadow-2xl flex flex-col relative group border border-white/[0.08]">
+            
+            <!-- Base Border -->
+            <div class="absolute inset-0 border border-white/[0.04] rounded-2xl pointer-events-none transition-colors duration-500 group-hover:border-transparent"></div>
+            
+            <!-- Hover Gradient Border -->
+            <div class="absolute inset-0 p-[1px] bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.15),transparent)] [mask-image:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] [mask-composite:exclude] [-webkit-mask-composite:xor] pointer-events-none rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+
+            <!-- Header Text -->
+            <div class="text-center mb-8 w-full relative z-20">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-black/50 border border-slate-700/50 mb-6 shadow-inner">
+                    <iconify-icon icon="solar:cpu-bolt-linear" width="24" height="24" stroke-width="1.5" class="text-slate-200"></iconify-icon>
+                </div>
+                <h1 id="reveal-title" class="text-3xl md:text-4xl font-thin tracking-tight text-white leading-tight mb-3 uppercase flex flex-wrap justify-center gap-x-2">
+                    <span class="overflow-hidden inline-block pt-1"><span class="reveal-word inline-block translate-y-[120%]">Nexus</span></span>
+                    <span class="overflow-hidden inline-block pt-1"><span class="reveal-word inline-block translate-y-[120%]">Gateway</span></span>
+                </h1>
+                <p class="text-sm text-slate-500 font-extralight leading-relaxed">
+                    Verify identity to initialize secure connection with the primary framework. Oversee active protocols and routing.
+                </p>
+            </div>
+
+            <!-- Error Messages Alert -->
+            <?php if(!empty($errors)): ?>
+                <div class="mb-5 p-3 rounded-lg bg-red-950/60 border border-red-800/60 text-red-300 text-xs font-light text-center relative z-20">
+                    <?php echo $errors; ?>
+                </div>
+            <?php endif; ?>
+            <?php if(validation_errors()): ?>
+                <div class="mb-5 p-3 rounded-lg bg-red-950/60 border border-red-800/60 text-red-300 text-xs font-light text-center relative z-20">
+                    <?php echo validation_errors(); ?>
+                </div>
+            <?php endif; ?>
+
+            <!-- Form -->
+            <form action="<?php echo base_url('auth/login'); ?>" method="post" class="space-y-5 relative z-20">
+                <div>
+                    <label for="email" class="text-xs font-light text-slate-400 mb-1.5 block uppercase tracking-widest">Operative Email / ID</label>
+                    <div class="relative rounded-lg bg-black/80 group/input">
+                        <div class="absolute inset-0 border border-slate-800/80 rounded-lg pointer-events-none transition-colors duration-300 group-hover/input:border-transparent focus-within:border-transparent"></div>
+                        <div class="absolute inset-0 p-[1px] bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.25),transparent)] [mask-image:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] [mask-composite:exclude] [-webkit-mask-composite:xor] pointer-events-none rounded-lg opacity-0 group-hover/input:opacity-100 focus-within:opacity-100 transition-opacity duration-300 z-10"></div>
+                        <input type="email" id="email" name="email" required autocomplete="off" class="relative w-full bg-transparent px-3 py-2 text-sm text-slate-200 focus:outline-none z-20 placeholder-slate-700 font-extralight" placeholder="admin@admin.com">
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between items-center mb-1.5">
+                        <label for="password" class="text-xs font-light text-slate-400 block uppercase tracking-widest">Security Key</label>
+                        <a href="#" class="text-xs font-extralight text-slate-400 hover:text-white transition-colors underline decoration-slate-700 underline-offset-2">Recover access</a>
+                    </div>
+                    <div class="relative rounded-lg bg-black/80 group/input">
+                        <div class="absolute inset-0 border border-slate-800/80 rounded-lg pointer-events-none transition-colors duration-300 group-hover/input:border-transparent focus-within:border-transparent"></div>
+                        <div class="absolute inset-0 p-[1px] bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.25),transparent)] [mask-image:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] [mask-composite:exclude] [-webkit-mask-composite:xor] pointer-events-none rounded-lg opacity-0 group-hover/input:opacity-100 focus-within:opacity-100 transition-opacity duration-300 z-10"></div>
+                        <input type="password" id="password" name="password" required autocomplete="off" class="relative w-full bg-transparent pl-3 pr-10 py-2 text-sm text-slate-200 focus:outline-none z-20 placeholder-slate-700 font-extralight" placeholder="••••••••">
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 pt-1">
+                    <div class="relative flex items-center justify-center w-4 h-4">
+                        <input type="checkbox" id="session" class="peer appearance-none w-4 h-4 border border-slate-700 rounded bg-black/50 checked:bg-slate-300 checked:border-slate-300 cursor-pointer transition-colors">
+                        <iconify-icon icon="solar:check-linear" width="12" height="12" stroke-width="1.5" class="absolute text-black opacity-0 peer-checked:opacity-100 pointer-events-none"></iconify-icon>
+                    </div>
+                    <label for="session" class="text-xs font-extralight text-slate-400 cursor-pointer select-none uppercase tracking-wider">Maintain persistent uplink</label>
+                </div>
+                
+                <!-- Primary Submit Button -->
+                <button type="submit" class="w-full bg-[#0a0a0a] hover:bg-[#111] text-white text-sm font-light py-2.5 rounded-lg transition-all mt-2 uppercase tracking-widest relative group/btn shadow-[0_0_20px_rgba(255,255,255,0.03)] hover:shadow-[0_0_25px_rgba(255,255,255,0.06)]">
+                    <div class="absolute inset-0 border border-white/10 rounded-lg pointer-events-none transition-colors duration-300 group-hover/btn:border-transparent"></div>
+                    <div class="absolute inset-0 p-[1px] bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.4),transparent)] [mask-image:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] [mask-composite:exclude] [-webkit-mask-composite:xor] pointer-events-none rounded-lg opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 z-10"></div>
+                    <span class="relative z-20">Initialize Uplink</span>
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="relative flex items-center py-6 z-20">
+                <div class="flex-grow border-t border-slate-800/60"></div>
+                <span class="flex-shrink-0 px-4 text-xs font-extralight text-slate-600 uppercase tracking-widest">Alternative Auth</span>
+                <div class="flex-grow border-t border-slate-800/60"></div>
+            </div>
+
+            <!-- Alternative Options -->
+            <div class="grid grid-cols-2 gap-3 z-20">
+                <button type="button" class="relative flex items-center justify-center gap-2 w-full bg-black/40 hover:bg-slate-900 rounded-lg py-2.5 text-sm text-slate-400 hover:text-slate-200 transition-colors font-extralight group/alt">
+                    <div class="absolute inset-0 border border-slate-800/80 rounded-lg pointer-events-none transition-colors duration-300 group-hover/alt:border-transparent"></div>
+                    <div class="absolute inset-0 p-[1px] bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.25),transparent)] [mask-image:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] [mask-composite:exclude] [-webkit-mask-composite:xor] pointer-events-none rounded-lg opacity-0 group-hover/alt:opacity-100 transition-opacity duration-300 z-10"></div>
+                    <span class="relative z-20 flex items-center gap-2"><iconify-icon icon="solar:buildings-linear" width="18" height="18" stroke-width="1.5"></iconify-icon> Corporate SSO</span>
+                </button>
+                <button type="button" class="relative flex items-center justify-center gap-2 w-full bg-black/40 hover:bg-slate-900 rounded-lg py-2.5 text-sm text-slate-400 hover:text-slate-200 transition-colors font-extralight group/alt">
+                    <div class="absolute inset-0 border border-slate-800/80 rounded-lg pointer-events-none transition-colors duration-300 group-hover/alt:border-transparent"></div>
+                    <div class="absolute inset-0 p-[1px] bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.25),transparent)] [mask-image:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] [mask-composite:exclude] [-webkit-mask-composite:xor] pointer-events-none rounded-lg opacity-0 group-hover/alt:opacity-100 transition-opacity duration-300 z-10"></div>
+                    <span class="relative z-20 flex items-center gap-2"><iconify-icon icon="solar:code-circle-linear" width="18" height="18" stroke-width="1.5"></iconify-icon> Git Auth</span>
+                </button>
+            </div>
         </div>
-        <!-- /.col -->
-        <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+
+        <!-- Social Proof -->
+        <div class="mt-8 flex flex-col items-center gap-4 relative z-20">
+            <div class="flex -space-x-2">
+                <img src="https://cdn.21st.dev/assets/localized/bba3220f058938fca64a658ed7bc7e88e92151754b572a90a2a3634979517541.jpg" alt="Active Node" class="w-10 h-10 rounded-full border border-slate-800 bg-black object-cover shadow-lg">
+                <img src="https://cdn.21st.dev/assets/localized/2739f91b816b2962674544bbf18e60661b4447bd222366cc57c8bf8c1ff3db5d.jpg" alt="Active Node" class="w-10 h-10 rounded-full border border-slate-800 bg-black object-cover shadow-lg">
+                <img src="https://cdn.21st.dev/assets/localized/380665b3fe4d47990da36c79a8c8ac09779534d1d9687430bb2a8a750843bada.jpg" alt="Active Node" class="w-10 h-10 rounded-full border border-slate-800 bg-black object-cover shadow-lg">
+                <div class="w-10 h-10 rounded-full border border-slate-700 bg-slate-900 flex items-center justify-center text-xs text-slate-300 font-extralight shadow-lg">+</div>
+            </div>
+            <p class="text-xs text-slate-600 font-extralight uppercase tracking-widest">Validated by distributed consensus nodes</p>
         </div>
-        <!-- /.col -->
-      </div>
-    </form>
 
-  </div>
-  <!-- /.login-box-body -->
-</div>
-<!-- /.login-box -->
+    </main>
 
-<!-- jQuery 3 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // GSAP Masked Reveal for Heading
+            gsap.registerPlugin(ScrollTrigger);
+            gsap.to(".reveal-word", {
+                y: "0%",
+                duration: 1.2,
+                ease: "power4.out",
+                stagger: 0.15,
+                scrollTrigger: {
+                    trigger: "#reveal-title",
+                    start: "top 95%",
+                }
+            });
 
-<script src="<?php echo base_url('assets/bower_components/jquery/dist/jquery.min.js') ?>"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="<?php echo base_url('assets/bower_components/bootstrap/dist/js/bootstrap.min.js') ?>"></script>
-<!-- iCheck -->
-<script src="<?php echo base_url('assets/plugins/iCheck/icheck.min.js') ?>"></script>
-<script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-</script>
+            // Flow Canvas Animation
+            const canvas = document.getElementById('flow-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            let width, height;
+            let explosions = [];
+
+            function resize() {
+                const dpr = window.devicePixelRatio || 1;
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width * dpr;
+                canvas.height = height * dpr;
+                ctx.scale(dpr, dpr);
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            window.addEventListener('click', (e) => {
+                explosions.push({ x: e.clientX, y: e.clientY, radius: 0, life: 1 });
+            });
+
+            const paths = [];
+            const numPaths = 80;
+            
+            for(let i = 0; i < numPaths; i++) {
+                paths.push({
+                    isLeft: i % 2 === 0,
+                    startY: (i / numPaths) * height * 1.4 - height * 0.2,
+                    particles: [{
+                        t: Math.random(),
+                        speed: 0.0015 + Math.random() * 0.002
+                    }]
+                });
+            }
+
+            function getBezierPoint(t, p0, p1, p2, p3) {
+                const u = 1 - t;
+                return {
+                    x: u**3 * p0.x + 3 * u**2 * t * p1.x + 3 * u * t**2 * p2.x + t**3 * p3.x,
+                    y: u**3 * p0.y + 3 * u**2 * t * p1.y + 3 * u * t**2 * p2.y + t**3 * p3.y
+                };
+            }
+
+            function render() {
+                ctx.clearRect(0, 0, width, height);
+                const centerX = width / 2;
+                const centerY = height / 2;
+
+                explosions.forEach(exp => {
+                    exp.radius += 15;
+                    exp.life -= 0.015;
+                });
+                explosions = explosions.filter(exp => exp.life > 0);
+
+                paths.forEach(path => {
+                    const p0 = { x: path.isLeft ? 0 : width, y: path.startY };
+                    const p1 = { x: path.isLeft ? centerX * 0.5 : width - centerX * 0.5, y: path.startY };
+                    const p2 = { x: path.isLeft ? centerX * 0.8 : width - centerX * 0.8, y: centerY };
+                    const p3 = { x: centerX, y: centerY };
+
+                    ctx.beginPath();
+                    ctx.moveTo(p0.x, p0.y);
+                    ctx.bezierCurveTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+                    ctx.lineWidth = 1.2;
+                    ctx.setLineDash([1, 4]);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+
+                    path.particles.forEach(p => {
+                        p.t += p.speed;
+                        if (p.t > 1) {
+                            p.t = 0;
+                            path.startY += (Math.random() - 0.5) * 10;
+                        }
+
+                        let pos = getBezierPoint(p.t, p0, p1, p2, p3);
+
+                        let dxTotal = 0, dyTotal = 0;
+                        explosions.forEach(exp => {
+                            let dx = pos.x - exp.x;
+                            let dy = pos.y - exp.y;
+                            let dist = Math.hypot(dx, dy);
+                            if (dist < exp.radius + 120 && dist > exp.radius - 120) {
+                                let force = (1 - Math.abs(dist - exp.radius) / 120) * exp.life;
+                                dxTotal += (dx / dist) * force * 80;
+                                dyTotal += (dy / dist) * force * 80;
+                            }
+                        });
+                        
+                        pos.x += dxTotal;
+                        pos.y += dyTotal;
+
+                        ctx.fillStyle = `rgba(255, 255, 255, 0.7)`;
+                        ctx.fillRect(pos.x - 1.5, pos.y - 1.5, 3, 3);
+                    });
+                });
+                
+                requestAnimationFrame(render);
+            }
+            
+            render();
+        });
+    </script>
 </body>
 </html>
