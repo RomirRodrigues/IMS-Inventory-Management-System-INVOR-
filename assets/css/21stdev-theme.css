@@ -283,3 +283,58 @@ table.dataTable tbody tr {
     background: #262626;
     border-radius: 3px;
 }
+
+/* ==========================================================================
+   MOBILE & DESKTOP RESPONSIVE BREAKPOINTS (iOS, Android, Tablet, Ultra-Wide)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    /* Mobile Header & Sidebar Overlays */
+    .main-header .logo {
+        width: 100% !important;
+        text-align: center !important;
+    }
+    .content-wrapper {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+    .content-header {
+        padding: 15px 10px 5px 10px !important;
+    }
+    .content-header h1 {
+        font-size: 20px !important;
+    }
+    .box-body {
+        padding: 12px !important;
+    }
+
+    /* Mobile DataTables Smooth Touch Scrolling */
+    .table-responsive {
+        border: 0 !important;
+        margin-bottom: 15px !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    /* Touch-Friendly Button Padding */
+    .btn, button {
+        min-height: 42px !important;
+        padding: 8px 16px !important;
+        font-size: 13px !important;
+    }
+
+    /* Stack Grid Cards on Mobile */
+    .col-lg-3, .col-md-4, .col-sm-6 {
+        width: 100% !important;
+        margin-bottom: 15px !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    /* Desktop Ultra-Wide Optimization */
+    .content-wrapper {
+        max-width: 1600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
