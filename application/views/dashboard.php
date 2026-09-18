@@ -1,88 +1,95 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <h1>
-      Dashboard
-      <small>Control Panel & Inventory Overview</small>
+  <section class="content-header" style="padding: 25px 25px 15px 25px;">
+    <h1 style="font-weight: 200; letter-spacing: -0.5px; color: #ffffff;">
+      Nexus Overview
+      <small style="color: #64748b; font-weight: 300;">21st.dev Control Panel & Inventory Intelligence</small>
     </h1>
-    <ol class="breadcrumb">
-      <li><a href="<?php echo base_url('dashboard'); ?>"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Dashboard</li>
+    <ol class="breadcrumb" style="background: transparent; top: 25px;">
+      <li><a href="<?php echo base_url('dashboard'); ?>" style="color: #64748b;"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active" style="color: #38bdf8;">Dashboard</li>
     </ol>
   </section>
 
   <!-- Main content -->
-  <section class="content">
+  <section class="content" style="padding: 0 25px 25px 25px;">
 
-    <!-- Quick Action Bar -->
-    <div class="row" style="margin-bottom: 15px;">
+    <!-- 21st.dev Quick Action Bar -->
+    <div class="row" style="margin-bottom: 25px;">
       <div class="col-md-12">
-        <div class="box box-solid bg-gray-light" style="border-radius: 6px; padding: 10px 15px; margin-bottom: 10px;">
-          <strong style="font-size: 14px; margin-right: 15px; color: #333;"><i class="fa fa-bolt text-yellow"></i> Quick Actions:</strong>
-          <a href="<?php echo base_url('orders/create'); ?>" class="btn btn-sm btn-primary btn-flat" style="margin-right: 8px;"><i class="fa fa-plus-circle"></i> Create Order</a>
-          <a href="<?php echo base_url('products/create'); ?>" class="btn btn-sm btn-success btn-flat" style="margin-right: 8px;"><i class="fa fa-cube"></i> Add Product</a>
-          <a href="<?php echo base_url('products'); ?>" class="btn btn-sm btn-info btn-flat" style="margin-right: 8px;"><i class="fa fa-list"></i> View Products</a>
-          <a href="<?php echo base_url('reports'); ?>" class="btn btn-sm btn-warning btn-flat"><i class="fa fa-bar-chart"></i> View Sales Reports</a>
+        <div class="metric-card" style="padding: 16px 24px; display: flex; align-items: center; flex-wrap: wrap; gap: 12px; background: rgba(15, 15, 15, 0.9);">
+          <span style="font-size: 13px; font-weight: 300; text-transform: uppercase; letter-spacing: 1.5px; color: #94a3b8; margin-right: 10px; display: flex; align-items: center; gap: 6px;">
+            <iconify-icon icon="solar:cpu-bolt-linear" width="18" height="18" class="text-amber-400"></iconify-icon>
+            Quick Actions:
+          </span>
+          <a href="<?php echo base_url('orders/create'); ?>" class="btn btn-primary btn-flat" style="display: inline-flex; align-items: center; gap: 6px;"><i class="fa fa-plus-circle"></i> Create Order</a>
+          <a href="<?php echo base_url('products/create'); ?>" class="btn btn-success btn-flat" style="display: inline-flex; align-items: center; gap: 6px;"><i class="fa fa-cube"></i> Add Product</a>
+          <a href="<?php echo base_url('products'); ?>" class="btn btn-info btn-flat" style="display: inline-flex; align-items: center; gap: 6px;"><i class="fa fa-list"></i> View Products</a>
+          <a href="<?php echo base_url('forecast'); ?>" class="btn btn-warning btn-flat" style="display: inline-flex; align-items: center; gap: 6px;"><i class="fa fa-magic"></i> AI Forecast</a>
         </div>
       </div>
     </div>
 
-    <!-- Small boxes (Stat boxes) -->
-    <div class="row">
+    <!-- 21st.dev Metric Stat Cards -->
+    <div class="row" style="margin-bottom: 25px;">
       <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-aqua">
-          <div class="inner">
-            <h3><?php echo $total_products; ?></h3>
-            <p>Total Products</p>
+        <div class="metric-card">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <div class="metric-value"><?php echo $total_products; ?></div>
+              <div class="metric-label">Total Products</div>
+            </div>
+            <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.2); display: flex; align-items: center; justify-content: center;">
+              <iconify-icon icon="solar:box-linear" width="22" height="22" class="text-sky-400"></iconify-icon>
+            </div>
           </div>
-          <div class="icon">
-            <i class="ion ion-bag"></i>
-          </div>
-          <a href="<?php echo base_url('products/'); ?>" class="small-box-footer">Manage Products <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      
-      <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-green">
-          <div class="inner">
-            <h3><?php echo $total_paid_orders; ?></h3>
-            <p>Paid Orders</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-stats-bars"></i>
-          </div>
-          <a href="<?php echo base_url('orders/'); ?>" class="small-box-footer">Manage Orders <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="<?php echo base_url('products/'); ?>" style="display: block; margin-top: 16px; font-size: 12px; color: #38bdf8; text-decoration: none;">Manage Catalog &rarr;</a>
         </div>
       </div>
 
       <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box <?php echo ($total_low_stock > 0) ? 'bg-red' : 'bg-yellow'; ?>">
-          <div class="inner">
-            <h3><?php echo $total_low_stock; ?></h3>
-            <p>Low Stock Items (<= 5)</p>
+        <div class="metric-card">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <div class="metric-value"><?php echo $total_paid_orders; ?></div>
+              <div class="metric-label">Paid Orders</div>
+            </div>
+            <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(52, 211, 153, 0.1); border: 1px solid rgba(52, 211, 153, 0.2); display: flex; align-items: center; justify-content: center;">
+              <iconify-icon icon="solar:bag-check-linear" width="22" height="22" class="text-emerald-400"></iconify-icon>
+            </div>
           </div>
-          <div class="icon">
-            <i class="ion ion-alert-circled"></i>
-          </div>
-          <a href="<?php echo base_url('products/'); ?>" class="small-box-footer">Check Inventory <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="<?php echo base_url('orders/'); ?>" style="display: block; margin-top: 16px; font-size: 12px; color: #34d399; text-decoration: none;">View Order Ledger &rarr;</a>
         </div>
       </div>
 
       <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-purple">
-          <div class="inner">
-            <h3><?php echo $currency . ' ' . number_format($total_revenue, 2); ?></h3>
-            <p>Total Sales Revenue</p>
+        <div class="metric-card" style="<?php echo ($total_low_stock > 0) ? 'border-color: rgba(248, 113, 113, 0.4);' : ''; ?>">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <div class="metric-value" style="<?php echo ($total_low_stock > 0) ? 'color: #f87171;' : ''; ?>"><?php echo $total_low_stock; ?></div>
+              <div class="metric-label">Low Stock Alerts</div>
+            </div>
+            <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.2); display: flex; align-items: center; justify-content: center;">
+              <iconify-icon icon="solar:danger-triangle-linear" width="22" height="22" class="text-amber-400"></iconify-icon>
+            </div>
           </div>
-          <div class="icon">
-            <i class="ion ion-cash"></i>
+          <a href="<?php echo base_url('products/'); ?>" style="display: block; margin-top: 16px; font-size: 12px; color: #fbbf24; text-decoration: none;">Check Stock Health &rarr;</a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-xs-6">
+        <div class="metric-card">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <div class="metric-value"><?php echo $currency . ' ' . number_format($total_revenue, 2); ?></div>
+              <div class="metric-label">Total Revenue</div>
+            </div>
+            <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(192, 132, 252, 0.1); border: 1px solid rgba(192, 132, 252, 0.2); display: flex; align-items: center; justify-content: center;">
+              <iconify-icon icon="solar:wallet-money-linear" width="22" height="22" class="text-purple-400"></iconify-icon>
+            </div>
           </div>
-          <a href="<?php echo base_url('reports/'); ?>" class="small-box-footer">Sales Report <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="<?php echo base_url('reports/'); ?>" style="display: block; margin-top: 16px; font-size: 12px; color: #c084fc; text-decoration: none;">Financial Analytics &rarr;</a>
         </div>
       </div>
     </div>
@@ -90,45 +97,44 @@
     <!-- Sales & Inventory Overview Charts -->
     <div class="row">
       <div class="col-md-8">
-        <div class="box box-primary">
-          <div class="box-header with-border">
-            <h3 class="box-title"><i class="fa fa-line-chart text-blue"></i> Monthly Sales Revenue Overview (<?php echo $selected_year; ?>)</h3>
-            <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            </div>
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title"><i class="fa fa-line-chart" style="color: #38bdf8;"></i> Revenue Flow Velocity (<?php echo $selected_year; ?>)</h3>
           </div>
           <div class="box-body">
             <div class="chart">
-              <canvas id="monthlySalesChart" style="height: 260px;"></canvas>
+              <canvas id="monthlySalesChart" style="height: 270px;"></canvas>
             </div>
           </div>
         </div>
       </div>
 
       <div class="col-md-4">
-        <div class="box box-warning">
-          <div class="box-header with-border">
-            <h3 class="box-title"><i class="fa fa-exclamation-triangle text-yellow"></i> Stock Status Summary</h3>
-            <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            </div>
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title"><i class="fa fa-pie-chart" style="color: #fbbf24;"></i> System Matrix Summary</h3>
           </div>
           <div class="box-body">
-            <ul class="list-group list-group-unbordered">
-              <li class="list-group-item">
-                <b>Total Products in System</b> <span class="pull-right label label-info"><?php echo $total_products; ?></span>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);">
+                <span>Total Catalog Items</span>
+                <code><?php echo $total_products; ?></code>
               </li>
-              <li class="list-group-item">
-                <b>Low Stock Threshold (<= 5)</b> <span class="pull-right label label-warning"><?php echo $total_low_stock; ?></span>
+              <li style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);">
+                <span>Low Stock Threshold (&le; 5)</span>
+                <span class="badge bg-yellow"><?php echo $total_low_stock; ?></span>
               </li>
-              <li class="list-group-item">
-                <b>Out of Stock Items</b> <span class="pull-right label label-danger"><?php echo $total_out_of_stock; ?></span>
+              <li style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);">
+                <span>Out of Stock Items</span>
+                <span class="badge bg-red"><?php echo $total_out_of_stock; ?></span>
               </li>
-              <li class="list-group-item">
-                <b>Active Stores</b> <span class="pull-right label label-success"><?php echo $total_stores; ?></span>
+              <li style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);">
+                <span>Active Store Outlets</span>
+                <code><?php echo $total_stores; ?></code>
               </li>
-              <li class="list-group-item">
-                <b>Registered Users</b> <span class="pull-right label label-primary"><?php echo $total_users; ?></span>
+              <li style="display: flex; justify-content: space-between; padding: 12px 0;">
+                <span>Registered Operatives</span>
+                <code><?php echo $total_users; ?></code>
               </li>
             </ul>
           </div>
@@ -139,12 +145,10 @@
     <!-- Tables Row: Low Stock Alerts & Recent Orders -->
     <div class="row">
       <div class="col-md-6">
-        <div class="box box-danger">
-          <div class="box-header with-border">
-            <h3 class="box-title"><i class="fa fa-bell text-red"></i> Low Stock Alerts</h3>
-            <div class="box-tools pull-right">
-              <a href="<?php echo base_url('products'); ?>" class="btn btn-xs btn-default">View All</a>
-            </div>
+        <div class="box">
+          <div class="box-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 class="box-title"><i class="fa fa-bell-o" style="color: #f87171;"></i> Critical Stock Alerts</h3>
+            <a href="<?php echo base_url('products'); ?>" class="btn btn-xs btn-primary">View All</a>
           </div>
           <div class="box-body table-responsive no-padding">
             <table class="table table-hover">
@@ -180,7 +184,7 @@
                   <?php endforeach; ?>
                 <?php else: ?>
                   <tr>
-                    <td colspan="5" class="text-center text-muted">All products have sufficient stock!</td>
+                    <td colspan="5" class="text-center text-muted" style="padding: 20px;">All catalog inventory healthy!</td>
                   </tr>
                 <?php endif; ?>
               </tbody>
@@ -190,12 +194,10 @@
       </div>
 
       <div class="col-md-6">
-        <div class="box box-success">
-          <div class="box-header with-border">
-            <h3 class="box-title"><i class="fa fa-shopping-cart text-green"></i> Recent Orders</h3>
-            <div class="box-tools pull-right">
-              <a href="<?php echo base_url('orders'); ?>" class="btn btn-xs btn-default">View All</a>
-            </div>
+        <div class="box">
+          <div class="box-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 class="box-title"><i class="fa fa-shopping-bag" style="color: #34d399;"></i> Recent Orders</h3>
+            <a href="<?php echo base_url('orders'); ?>" class="btn btn-xs btn-primary">View All</a>
           </div>
           <div class="box-body table-responsive no-padding">
             <table class="table table-hover">
@@ -227,7 +229,7 @@
                   <?php endforeach; ?>
                 <?php else: ?>
                   <tr>
-                    <td colspan="5" class="text-center text-muted">No orders found.</td>
+                    <td colspan="5" class="text-center text-muted" style="padding: 20px;">No recent transactions.</td>
                   </tr>
                 <?php endif; ?>
               </tbody>
@@ -246,30 +248,56 @@
   $(document).ready(function() {
     $("#dashboardMainMenu").addClass('active');
 
-    // Chart.js Monthly Sales
+    // 21st.dev Chart.js Monthly Sales Styling
     var monthlySalesData = <?php echo $monthly_sales; ?>;
     var canvas = document.getElementById('monthlySalesChart');
     if (canvas) {
       var ctx = canvas.getContext('2d');
+      
+      var gradient = ctx.createLinearGradient(0, 0, 0, 260);
+      gradient.addColorStop(0, 'rgba(56, 189, 248, 0.4)');
+      gradient.addColorStop(1, 'rgba(56, 189, 248, 0.0)');
+
       var chart = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
           labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
           datasets: [{
             label: 'Sales Revenue (<?php echo $currency; ?>)',
             data: monthlySalesData,
-            backgroundColor: 'rgba(60, 141, 188, 0.7)',
-            borderColor: 'rgba(60, 141, 188, 1)',
-            borderWidth: 1
+            backgroundColor: gradient,
+            borderColor: '#38bdf8',
+            borderWidth: 2,
+            pointBackgroundColor: '#ffffff',
+            pointBorderColor: '#38bdf8',
+            pointRadius: 4,
+            lineTension: 0.35
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          legend: {
+            display: false
+          },
           scales: {
-            yAxes: [{
+            xAxes: [{
+              gridLines: {
+                color: 'rgba(255, 255, 255, 0.05)',
+                zeroLineColor: 'rgba(255, 255, 255, 0.08)'
+              },
               ticks: {
-                beginAtZero: true
+                fontColor: '#94a3b8'
+              }
+            }],
+            yAxes: [{
+              gridLines: {
+                color: 'rgba(255, 255, 255, 0.05)',
+                zeroLineColor: 'rgba(255, 255, 255, 0.08)'
+              },
+              ticks: {
+                beginAtZero: true,
+                fontColor: '#94a3b8'
               }
             }]
           }

@@ -1,0 +1,339 @@
+/* ==========================================================================
+   21st.dev Next-Gen High-Tech Dark Theme & Glassmorphism Overlay
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap');
+
+:root {
+    --bg-main: #000000;
+    --bg-card: rgba(10, 10, 10, 0.92);
+    --border-base: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(255, 255, 255, 0.25);
+    --text-primary: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent-blue: #38bdf8;
+    --accent-green: #34d399;
+    --accent-yellow: #fbbf24;
+    --accent-red: #f87171;
+    --accent-purple: #c084fc;
+}
+
+body, html {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    background-color: var(--bg-main) !important;
+    color: var(--text-primary) !important;
+    overflow-x: hidden;
+}
+
+/* Background canvas texture overlay */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.12;
+    background-image: url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%202%202%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23ffffff%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23ffffff%22%2F%3E%3C%2Fsvg%3E');
+    background-size: 2px 2px;
+}
+
+/* Wrapper Layout Overrides */
+.wrapper {
+    background-color: var(--bg-main) !important;
+}
+
+.content-wrapper, .right-side {
+    background-color: var(--bg-main) !important;
+    position: relative;
+    z-index: 1;
+}
+
+/* 21st.dev Top Navigation Bar */
+.main-header {
+    background-color: rgba(5, 5, 5, 0.95) !important;
+    border-bottom: 1px solid var(--border-base) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.main-header .logo {
+    background-color: #000000 !important;
+    border-right: 1px solid var(--border-base) !important;
+    color: #ffffff !important;
+    font-weight: 300 !important;
+    letter-spacing: 1px;
+}
+
+.main-header .navbar {
+    background-color: transparent !important;
+}
+
+.main-header .navbar .sidebar-toggle {
+    color: #94a3b8 !important;
+}
+
+.main-header .navbar .sidebar-toggle:hover {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.navbar-custom-menu .nav > li > a {
+    color: #cbd5e1 !important;
+    font-weight: 300;
+    transition: all 0.2s ease;
+}
+
+.navbar-custom-menu .nav > li > a:hover {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* 21st.dev Sidebar */
+.main-sidebar {
+    background-color: #050505 !important;
+    border-right: 1px solid var(--border-base) !important;
+}
+
+.sidebar-menu > li > a {
+    color: #94a3b8 !important;
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease;
+    font-weight: 300;
+    font-size: 13.5px;
+    padding: 12px 15px 12px 18px !important;
+}
+
+.sidebar-menu > li:hover > a, .sidebar-menu > li.active > a {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border-left-color: var(--accent-blue) !important;
+}
+
+.sidebar-menu .treeview-menu {
+    background-color: #000000 !important;
+    padding-left: 10px;
+}
+
+.sidebar-menu .treeview-menu > li > a {
+    color: #64748b !important;
+}
+
+.sidebar-menu .treeview-menu > li.active > a, 
+.sidebar-menu .treeview-menu > li > a:hover {
+    color: #38bdf8 !important;
+}
+
+/* 21st.dev Glassmorphism Cards & Boxes */
+.box, .well, .small-box {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-base) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.box:hover, .small-box:hover {
+    border-color: var(--border-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.03) !important;
+}
+
+.box-header {
+    border-bottom: 1px solid var(--border-base) !important;
+    padding: 16px 20px !important;
+    background: transparent !important;
+}
+
+.box-header .box-title {
+    color: #f8fafc !important;
+    font-weight: 300 !important;
+    font-size: 16px !important;
+    letter-spacing: 0.5px;
+}
+
+.box-body {
+    padding: 20px !important;
+    color: #cbd5e1 !important;
+}
+
+/* 21st.dev Metric Cards */
+.metric-card {
+    position: relative;
+    background: rgba(10, 10, 10, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.4s ease;
+}
+
+.metric-card:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.04);
+}
+
+.metric-card .metric-value {
+    font-size: 32px;
+    font-weight: 200;
+    color: #ffffff;
+    letter-spacing: -1px;
+}
+
+.metric-card .metric-label {
+    font-size: 12px;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+/* DataTables 21st.dev Styling */
+.table {
+    color: #cbd5e1 !important;
+    background: transparent !important;
+}
+
+.table th {
+    border-bottom: 1px solid var(--border-base) !important;
+    color: #94a3b8 !important;
+    font-weight: 400 !important;
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+}
+
+.table td {
+    border-top: 1px solid rgba(255, 255, 255, 0.04) !important;
+    font-weight: 300;
+    vertical-align: middle !important;
+}
+
+.table-hover > tbody > tr:hover {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+.dataTables_wrapper .dataTables_length, 
+.dataTables_wrapper .dataTables_filter, 
+.dataTables_wrapper .dataTables_info, 
+.dataTables_wrapper .dataTables_paginate {
+    color: #94a3b8 !important;
+    font-weight: 300;
+}
+
+.dataTables_wrapper input, .dataTables_wrapper select {
+    background: #000000 !important;
+    border: 1px solid var(--border-base) !important;
+    color: #ffffff !important;
+    border-radius: 8px !important;
+    padding: 6px 12px !important;
+}
+
+.dataTables_wrapper input:focus, .dataTables_wrapper select:focus {
+    border-color: var(--accent-blue) !important;
+    outline: none !important;
+}
+
+/* Buttons 21st.dev Glass Styling */
+.btn-flat, .btn {
+    border-radius: 8px !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.5px;
+    transition: all 0.25s ease !important;
+}
+
+.btn-primary {
+    background: #0a0a0a !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+}
+
+.btn-primary:hover {
+    background: #171717 !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.08) !important;
+}
+
+.btn-success {
+    background: rgba(52, 211, 153, 0.1) !important;
+    border: 1px solid rgba(52, 211, 153, 0.3) !important;
+    color: #34d399 !important;
+}
+
+.btn-success:hover {
+    background: rgba(52, 211, 153, 0.2) !important;
+    border-color: #34d399 !important;
+}
+
+.btn-info {
+    background: rgba(56, 189, 248, 0.1) !important;
+    border: 1px solid rgba(56, 189, 248, 0.3) !important;
+    color: #38bdf8 !important;
+}
+
+.btn-info:hover {
+    background: rgba(56, 189, 248, 0.2) !important;
+    border-color: #38bdf8 !important;
+}
+
+.btn-warning {
+    background: rgba(251, 191, 36, 0.1) !important;
+    border: 1px solid rgba(251, 191, 36, 0.3) !important;
+    color: #fbbf24 !important;
+}
+
+.btn-warning:hover {
+    background: rgba(251, 191, 36, 0.2) !important;
+    border-color: #fbbf24 !important;
+}
+
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #404040;
+}
+
+/* Modals 21st.dev Dark Glass */
+.modal-content {
+    background: rgba(10, 10, 10, 0.96) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 16px !important;
+    color: #f8fafc !important;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9) !important;
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-base) !important;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-base) !important;
+}
+
+/* Code SKU tags */
+code {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #38bdf8 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 6px !important;
+    padding: 2px 6px !important;
+    font-family: monospace !important;
+}
