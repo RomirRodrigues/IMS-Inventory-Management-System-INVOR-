@@ -8,66 +8,66 @@ class Model_auth extends CI_Model
 	}
 
 	/* 
-		Checks if user exists by email OR username (case-insensitive & trimmed)
+		Checks if exact email exists (for registration check)
 	*/
 	public function check_email($email) 
 	{
 		if($email) {
 			$clean = trim(strtolower($email));
-			$sql = 'SELECT * FROM `users` WHERE LOWER(TRIM(email)) = ? OR LOWER(TRIM(username)) = ?';
-			$query = $this->db->query($sql, array($clean, $clean));
-			return ($query->num_rows() >= 1) ? true : false;
+			$sql = 'SELECT * FROM `users` WHERE LOWER(TRIM(email)) = ?';
+			$query = $this->db->query($sql, array($clean));
+			return ($query && $query->num_rows() >= 1) ? true : false;
 		}
 
 		return false;
 	}
 
+	/* 
+		Checks if exact username exists (for registration check)
+	*/
 	public function check_username($username)
 	{
 		if($username) {
 			$clean = trim(strtolower($username));
-			$sql = 'SELECT * FROM `users` WHERE LOWER(TRIM(username)) = ? OR LOWER(TRIM(email)) = ?';
+			$sql = 'SELECT * FROM `users` WHERE LOWER(TRIM(username)) = ?';
+			$query = $this->db->query($sql, array($clean));
+			return ($query && $query->num_rows() >= 1) ? true : false;
+		}
+		return false;
+	}
+
+	/*
+		Retrieves user record by Email OR Username for Login lookup
+	*/
+	public function getUserByLogin($identity)
+	{
+		if($identity) {
+			$clean = trim(strtolower($identity));
+			$sql = "SELECT * FROM `users` WHERE LOWER(TRIM(email)) = ? OR LOWER(TRIM(username)) = ?";
 			$query = $this->db->query($sql, array($clean, $clean));
-			return ($query->num_rows() >= 1) ? true : false;
+			if($query && $query->num_rows() >= 1) {
+				return $query->row_array();
+			}
 		}
 		return false;
 	}
 
 	/* 
-		This function checks if the email/username and password matches with the database
+		Legacy login wrapper for backward compatibility
 	*/
 	public function login($email, $password) {
-		if($email && $password) {
-			$clean = trim(strtolower($email));
-			$sql = "SELECT * FROM `users` WHERE LOWER(TRIM(email)) = ? OR LOWER(TRIM(username)) = ?";
-			$query = $this->db->query($sql, array($clean, $clean));
-
-			if($query->num_rows() >= 1) {
-				$result = $query->row_array();
-
-				$hash_password = password_verify($password, $result['password']);
-				if($hash_password === true) {
-					return $result;	
-				}
-				else {
-					return false;
-				}
-			}
-			else {
-				return false;
+		$user = $this->getUserByLogin($email);
+		if($user && isset($user['password'])) {
+			if(password_verify($password, $user['password'])) {
+				return $user;
 			}
 		}
+		return false;
 	}
 
 	public function getUserByEmail($email)
 	{
-		if($email) {
-			$clean = trim(strtolower($email));
-			$sql = "SELECT * FROM `users` WHERE LOWER(TRIM(email)) = ? OR LOWER(TRIM(username)) = ?";
-			$query = $this->db->query($sql, array($clean, $clean));
-			return $query->row_array();
-		}
-		return false;
+		return $this->getUserByLogin($email);
 	}
 
 	public function createGoogleUser($email, $name = 'Google User')

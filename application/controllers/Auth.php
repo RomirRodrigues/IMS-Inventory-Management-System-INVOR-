@@ -33,15 +33,13 @@ class Auth extends Admin_Controller
         $this->form_validation->set_rules('password', 'Password', 'required');
 
         if ($this->form_validation->run() == TRUE) {
-			$email_input = trim($this->input->post('email'));
+			$login_input = trim($this->input->post('email'));
 			$password_input = trim($this->input->post('password'));
 
-           	$user_exists = $this->model_auth->check_email($email_input);
+           	$user = $this->model_auth->getUserByLogin($login_input);
 
-           	if($user_exists == TRUE) {
-           		$login = $this->model_auth->login($email_input, $password_input);
-
-           		if($login) {
+           	if($user) {
+           		if(password_verify($password_input, $user['password'])) {
 					// Reset attempt counter
 					$this->session->unset_userdata('login_attempts');
 					$this->session->unset_userdata('last_attempt_time');
@@ -49,7 +47,7 @@ class Auth extends Admin_Controller
 					// Generate 2FA 6-digit PIN
 					$two_factor_code = (string)rand(100000, 999999);
 					$this->session->set_userdata(array(
-						'pending_user' => $login,
+						'pending_user' => $user,
 						'two_factor_code' => $two_factor_code,
 						'two_factor_expires' => time() + 300
 					));
